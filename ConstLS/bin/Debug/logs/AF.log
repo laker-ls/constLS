@@ -1,0 +1,5 @@
+Angelica File Module Error Log
+Created(or opened) on 08/12/2020 21:17:20
+
+[21:17:20.648] AFilePackage::Open(), Can not open file [C:\Users\laker\source\repos\ConstLS\ConstLS\bin\Debug\configs.pck]
+[21:17:20.648] AFilePackMan::OpenFilePackage(), Can not open package [configs.pck]
