@@ -57,7 +57,12 @@
     <Compile Include="ConstLS.Designer.cs">
       <DependentUpon>ConstLS.cs</DependentUpon>
     </Compile>
-    <Compile Include="Offset.cs" />
+    <Compile Include="Coordination.cs" />
+    <Compile Include="Memory\Client.cs" />
+    <Compile Include="Memory\MemoryRead.cs" />
+    <Compile Include="Memory\MemoryWrite.cs" />
+    <Compile Include="Memory\WinApiMemory.cs" />
+    <Compile Include="Memory\Offset.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ConstLS.resx">

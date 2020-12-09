@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConstLS
+namespace ConstLS.Memory
 {
     struct Offset
     {
+        public const int GA = 0x5B4594;
+
         public struct Personage
         {
             public const int self = 0x20,

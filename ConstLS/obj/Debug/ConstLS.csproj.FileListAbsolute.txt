@@ -10,3 +10,15 @@ C:\Users\laker\source\repos\ConstLS\ConstLS\obj\Debug\ConstLS.exe
 C:\Users\laker\source\repos\ConstLS\ConstLS\obj\Debug\ConstLS.pdb
 C:\Users\laker\source\repos\ConstLS\ConstLS\bin\Debug\VAMemory.dll
 C:\Users\laker\source\repos\ConstLS\ConstLS\obj\Debug\ConstLS.csproj.CopyComplete
+C:\Users\webProg\source\repos\constLS\ConstLS\bin\Debug\ConstLS.exe.config
+C:\Users\webProg\source\repos\constLS\ConstLS\bin\Debug\ConstLS.exe
+C:\Users\webProg\source\repos\constLS\ConstLS\bin\Debug\ConstLS.pdb
+C:\Users\webProg\source\repos\constLS\ConstLS\bin\Debug\VAMemory.dll
+C:\Users\webProg\source\repos\constLS\ConstLS\obj\Debug\ConstLS.csprojAssemblyReference.cache
+C:\Users\webProg\source\repos\constLS\ConstLS\obj\Debug\ConstLS.MainWindow.resources
+C:\Users\webProg\source\repos\constLS\ConstLS\obj\Debug\ConstLS.Properties.Resources.resources
+C:\Users\webProg\source\repos\constLS\ConstLS\obj\Debug\ConstLS.csproj.GenerateResource.cache
+C:\Users\webProg\source\repos\constLS\ConstLS\obj\Debug\ConstLS.csproj.CoreCompileInputs.cache
+C:\Users\webProg\source\repos\constLS\ConstLS\obj\Debug\ConstLS.csproj.CopyComplete
+C:\Users\webProg\source\repos\constLS\ConstLS\obj\Debug\ConstLS.exe
+C:\Users\webProg\source\repos\constLS\ConstLS\obj\Debug\ConstLS.pdb
