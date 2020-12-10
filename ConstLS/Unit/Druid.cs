@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConstLS.Memory
+namespace ConstLS.Unit
 {
-    class MemoryWrite
+    class Druid : UnitBase
     {
-        
 
-        
     }
 }

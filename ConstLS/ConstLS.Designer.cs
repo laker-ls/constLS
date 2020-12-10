@@ -28,73 +28,108 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.labelHP = new System.Windows.Forms.Label();
-            this.update = new System.Windows.Forms.Button();
             this.labelMP = new System.Windows.Forms.Label();
-            this.attack = new System.Windows.Forms.Button();
+            this.unitName1 = new System.Windows.Forms.GroupBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.labelCoords = new System.Windows.Forms.Label();
+            this.mobName1 = new System.Windows.Forms.GroupBox();
+            this.labelDistance1 = new System.Windows.Forms.Label();
+            this.unitName1.SuspendLayout();
+            this.mobName1.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelHP
             // 
             this.labelHP.AutoSize = true;
-            this.labelHP.Location = new System.Drawing.Point(22, 25);
+            this.labelHP.Location = new System.Drawing.Point(6, 33);
             this.labelHP.Name = "labelHP";
             this.labelHP.Size = new System.Drawing.Size(22, 13);
             this.labelHP.TabIndex = 0;
             this.labelHP.Text = "HP";
             // 
-            // update
-            // 
-            this.update.Location = new System.Drawing.Point(25, 160);
-            this.update.Name = "update";
-            this.update.Size = new System.Drawing.Size(75, 23);
-            this.update.TabIndex = 1;
-            this.update.Text = "Обновить";
-            this.update.UseVisualStyleBackColor = true;
-            this.update.Click += new System.EventHandler(this.Update_Click);
-            // 
             // labelMP
             // 
             this.labelMP.AutoSize = true;
-            this.labelMP.Location = new System.Drawing.Point(22, 63);
+            this.labelMP.Location = new System.Drawing.Point(6, 63);
             this.labelMP.Name = "labelMP";
             this.labelMP.Size = new System.Drawing.Size(23, 13);
             this.labelMP.TabIndex = 2;
             this.labelMP.Text = "MP";
+            this.labelMP.Click += new System.EventHandler(this.LabelMP_Click);
             // 
-            // attack
+            // unitName1
             // 
-            this.attack.Location = new System.Drawing.Point(118, 160);
-            this.attack.Name = "attack";
-            this.attack.Size = new System.Drawing.Size(75, 23);
-            this.attack.TabIndex = 3;
-            this.attack.Text = "А";
-            this.attack.UseVisualStyleBackColor = true;
-            this.attack.Click += new System.EventHandler(this.Attack_Click);
+            this.unitName1.Controls.Add(this.labelMP);
+            this.unitName1.Controls.Add(this.labelHP);
+            this.unitName1.Location = new System.Drawing.Point(12, 12);
+            this.unitName1.Name = "unitName1";
+            this.unitName1.Size = new System.Drawing.Size(113, 91);
+            this.unitName1.TabIndex = 3;
+            this.unitName1.TabStop = false;
+            this.unitName1.Text = "Имя персонажа 1";
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
+            // 
+            // labelCoords
+            // 
+            this.labelCoords.AutoSize = true;
+            this.labelCoords.Location = new System.Drawing.Point(6, 34);
+            this.labelCoords.Name = "labelCoords";
+            this.labelCoords.Size = new System.Drawing.Size(75, 13);
+            this.labelCoords.TabIndex = 4;
+            this.labelCoords.Text = "Коорды моба";
+            // 
+            // mobName1
+            // 
+            this.mobName1.Controls.Add(this.labelDistance1);
+            this.mobName1.Controls.Add(this.labelCoords);
+            this.mobName1.Location = new System.Drawing.Point(12, 128);
+            this.mobName1.Name = "mobName1";
+            this.mobName1.Size = new System.Drawing.Size(348, 62);
+            this.mobName1.TabIndex = 5;
+            this.mobName1.TabStop = false;
+            this.mobName1.Text = "Имя моба 1";
+            // 
+            // labelDistance1
+            // 
+            this.labelDistance1.AutoSize = true;
+            this.labelDistance1.Location = new System.Drawing.Point(251, 34);
+            this.labelDistance1.Name = "labelDistance1";
+            this.labelDistance1.Size = new System.Drawing.Size(67, 13);
+            this.labelDistance1.TabIndex = 5;
+            this.labelDistance1.Text = "Расстояние";
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(218, 200);
-            this.Controls.Add(this.attack);
-            this.Controls.Add(this.labelMP);
-            this.Controls.Add(this.update);
-            this.Controls.Add(this.labelHP);
+            this.ClientSize = new System.Drawing.Size(394, 211);
+            this.Controls.Add(this.mobName1);
+            this.Controls.Add(this.unitName1);
             this.Name = "MainWindow";
             this.Text = "constLS";
             this.Load += new System.EventHandler(this.MainWindow_Load);
+            this.unitName1.ResumeLayout(false);
+            this.unitName1.PerformLayout();
+            this.mobName1.ResumeLayout(false);
+            this.mobName1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Label labelHP;
-        private System.Windows.Forms.Button update;
         private System.Windows.Forms.Label labelMP;
-        private System.Windows.Forms.Button attack;
+        private System.Windows.Forms.GroupBox unitName1;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label labelCoords;
+        private System.Windows.Forms.GroupBox mobName1;
+        private System.Windows.Forms.Label labelDistance1;
     }
 }
 

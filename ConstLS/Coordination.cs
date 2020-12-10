@@ -4,6 +4,6 @@ namespace ConstLS
 {
     class Coordination
     {
-        Client pwClient;
+        ClientMemory pwClient;
     }
 }

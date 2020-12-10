@@ -24,5 +24,14 @@ namespace ConstLS.Memory
             Int32 size,
             out Int32 lpNumberOfBytesRead
         );
+
+        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        public static extern int VirtualAllocEx(
+            IntPtr hProcess, 
+            Int32 lpAddress,
+            Int32 dwSize, 
+            Int32 flAllocationType, 
+            Int32 flProtect
+        );
     }
 }

@@ -8,8 +8,6 @@ C:\Users\laker\source\repos\ConstLS\ConstLS\obj\Debug\ConstLS.csproj.GenerateRes
 C:\Users\laker\source\repos\ConstLS\ConstLS\obj\Debug\ConstLS.csproj.CoreCompileInputs.cache
 C:\Users\laker\source\repos\ConstLS\ConstLS\obj\Debug\ConstLS.exe
 C:\Users\laker\source\repos\ConstLS\ConstLS\obj\Debug\ConstLS.pdb
-C:\Users\laker\source\repos\ConstLS\ConstLS\bin\Debug\VAMemory.dll
-C:\Users\laker\source\repos\ConstLS\ConstLS\obj\Debug\ConstLS.csproj.CopyComplete
 C:\Users\webProg\source\repos\constLS\ConstLS\bin\Debug\ConstLS.exe.config
 C:\Users\webProg\source\repos\constLS\ConstLS\bin\Debug\ConstLS.exe
 C:\Users\webProg\source\repos\constLS\ConstLS\bin\Debug\ConstLS.pdb
