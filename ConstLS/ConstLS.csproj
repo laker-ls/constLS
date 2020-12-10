@@ -53,6 +53,7 @@
       <DependentUpon>ConstLS.cs</DependentUpon>
     </Compile>
     <Compile Include="Coordination.cs" />
+    <Compile Include="Memory\ActionForInjectInMemory.cs" />
     <Compile Include="Memory\ClientMemory.cs" />
     <Compile Include="Memory\ReadMemory.cs" />
     <Compile Include="Memory\WriteMemory.cs" />

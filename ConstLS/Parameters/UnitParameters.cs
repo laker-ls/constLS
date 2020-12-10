@@ -17,6 +17,9 @@ namespace ConstLS.Parameters
         public Int32 MP() { return pwClient.read.as4byte(this.Personage() + OffsetInMemory.MP); }
         public Int32 maxMP() { return pwClient.read.as4byte(this.Personage() + OffsetInMemory.maxMP); }
 
-        private Int32 Personage() { return pwClient.read.as4byte(OffsetInMemory.GameAddress + OffsetInMemory.structurePersonage); }
+        private Int32 Personage() {
+            int buffer = pwClient.read.as4byte(OffsetInMemory.GameAddress);
+            return pwClient.read.as4byte(buffer + OffsetInMemory.structurePersonage);
+        }
     }
 }

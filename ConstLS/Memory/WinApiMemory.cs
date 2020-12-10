@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 
 namespace ConstLS.Memory
@@ -33,5 +29,33 @@ namespace ConstLS.Memory
             Int32 flAllocationType, 
             Int32 flProtect
         );
+
+        [DllImport("kernel32.dll")]
+        public static extern bool WriteProcessMemory(
+            IntPtr hProcess,
+            Int32 lpBaseAddress,
+            [In, Out] Byte[] buffer,
+            Int32 nSize,
+            out Int32 lpNumberOfBytesWritten
+        );
+
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr CreateRemoteThread(
+            IntPtr hProcess,
+            IntPtr lpThreadAttributes, 
+            int dwStackSize, Int32 lpStartAddress,
+            Int32 lpParameter, 
+            int dwCreationFlags, 
+            out IntPtr lpThreadId
+        );
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern UInt32 WaitForSingleObject(
+            IntPtr hHandle, 
+            Int32 dwMilliseconds
+        );
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool CloseHandle(IntPtr hObject);
     }
 }

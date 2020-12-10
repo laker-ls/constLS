@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace ConstLS.Memory
 {
@@ -15,6 +12,18 @@ namespace ConstLS.Memory
         public WriteMemory(IntPtr hProcess)
         {
             this.hProcess = hProcess;
+        }
+
+        public void inject(byte[] func, byte[] param)
+        {
+            int ipNumberWritten = 0; IntPtr lpThreadId = IntPtr.Zero;
+
+            WinApiMemory.WriteProcessMemory(this.hProcess, this.pathFunction, func, 250, out ipNumberWritten);
+            WinApiMemory.WriteProcessMemory(this.hProcess, this.pathParameters, param, 250, out ipNumberWritten);
+
+            IntPtr hProcThread = WinApiMemory.CreateRemoteThread(this.hProcess, IntPtr.Zero, 0, this.pathFunction, this.pathParameters, 0, out lpThreadId);
+            WinApiMemory.WaitForSingleObject(hProcThread, Timeout.Infinite);
+            WinApiMemory.CloseHandle(hProcThread);
         }
 
         public void memoryAllocation()

@@ -13,7 +13,7 @@ namespace ConstLS
         {
             InitializeComponent();
 
-            TopMost = true;
+            //TopMost = true;
         }
 
         private void MainWindow_Load(object sender, EventArgs e)

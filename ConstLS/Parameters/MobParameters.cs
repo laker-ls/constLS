@@ -106,7 +106,6 @@ namespace ConstLS.Parameters
         public string mobSearch()
         {
             int number = -1;
-            float distance = 100000;
             Coordinates coords = this.mobCoordination(number);
 
             for (int i = 0; i < 768; i++) {
@@ -127,7 +126,7 @@ namespace ConstLS.Parameters
         private Int32 Mob(Int32 number)
         {
             Int32 buffer;
-            buffer = OffsetInMemory.GameAddress;
+            buffer = pwClient.read.as4byte(OffsetInMemory.GameAddress);
             foreach (Int32 offset in OffsetInMemory.structureMobs()) {
                 buffer = pwClient.read.as4byte(buffer + offset);
             }

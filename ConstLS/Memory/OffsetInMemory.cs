@@ -8,7 +8,7 @@ namespace ConstLS.Memory
 {
     struct OffsetInMemory
     {
-        public const Int32 GameAddress = 0x0855AC00,
+        public const Int32 GameAddress = 0x9B4594,
             /** Основные структуры */
             structurePersonage = 0x20,
 
@@ -26,7 +26,7 @@ namespace ConstLS.Memory
             mobY = 0x44,
             mobType = 0xB4,
             mobWorldID = 0x11C,
-            mobDist = 0x240, // не нашёл оффсета
+            mobDist = 0x000, // не нашёл оффсета
             mobName = 0x24C;
 
         public static Int32[] structureMobs()

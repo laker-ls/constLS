@@ -19,7 +19,6 @@ namespace ConstLS.Memory
             this.read = new ReadMemory(hProcess);
 
             this.write = new WriteMemory(hProcess);
-            this.write.memoryAllocation();
         }
     }
 }
