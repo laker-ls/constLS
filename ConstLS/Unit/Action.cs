@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ConstLS.Memory;
+﻿using ConstLS.Memory;
+using ConstLS.Memory.Offsets;
 
 namespace ConstLS.Unit
 {
@@ -21,19 +17,16 @@ namespace ConstLS.Unit
             ASM asm = new ASM();
             asm.Pushad();
 
-            asm.Mov_EBX(0x0093E05C);
+            asm.Mov_EBX(Offset.call.skill);
 
-            asm.Mov_ESI(0x1AB584E0);
-            asm.Mov_EDI(0x01);
-            asm.Mov_EAX(0x7D);
-
-            asm.Mov_ECX_DWORD_Ptr(OffsetInMemory.BaseAddress);
-            asm.Mov_EAX_DWORD_Ptr_EAX(0x08);
-            asm.Mov_EDX_DWORD_Ptr_ECX_Add(0x1C);
-            asm.Push_ESI();
-            asm.Mov_ESI_DWORD_Ptr_EDX_Add(0x34);
-            asm.Push_EDI();
-            asm.Push_EAX();
+            asm.Mov_ECX_DWORD_Ptr(Offset.baseAddress);
+            asm.Mov_ECX_DWORD_Ptr_ECX_Add(0x1C);
+            asm.Mov_ECX_DWORD_Ptr_ECX_Add(0x20);
+            asm.Push68(-1);
+            asm.Push6A(0x00);
+            asm.Push6A(0x00);
+            asm.Mov_EDX(0x7D);
+            asm.Push_EDX();
             asm.Call_DWORD_Ptr_EBX();
 
             asm.Popad();
@@ -48,7 +41,7 @@ namespace ConstLS.Unit
             asm.Pushad();
 
             asm.Mov_EDI(mobWorldID);
-            asm.Mov_EDX(0x00632150);
+            asm.Mov_EDX(Offset.call.target);
 
             asm.Mov_EAX_DWORD_Ptr(0x00A591E0);
             asm.Mov_ECX_DWORD_Ptr_EAX_Add(0x20);
@@ -62,29 +55,27 @@ namespace ConstLS.Unit
             this.sendInGame(asm.inBytes());
         }
 
-        public void sendPacket() // TODO: не работает
+        public void sendPacket(byte[] bodyPacket)
         {
-            int lengthPacket = 0x04;
-            int bodyPacket = 0x22222222;
-            //byte[] bodyPacket = { 30, 00, 00, 00 };
+            pwClient.write.packet(bodyPacket);
 
             ASM asm = new ASM();
             asm.Pushad();
 
-            //asm.Mov_ESI(bodyPacket);
-            //asm.Mov_EDI(OffsetInMemory.callPacket);
-            asm.Mov_EDI(0x0063F890);
+            asm.Mov_EAX(Offset.call.packet);
 
-            asm.Mov_ECX_DWORD_Ptr(OffsetInMemory.BaseAddress);
+            asm.Mov_ECX_DWORD_Ptr(Offset.baseAddress);
             asm.Mov_ECX_DWORD_Ptr_ECX_Add(0x20);
-            asm.Push6A(lengthPacket);
-            asm.Push68(bodyPacket);
-            asm.Call_EDI();
+            asm.Mov_EDI(pwClient.allocMemoryPacket);
+            asm.Push6A(bodyPacket.Length);
+            asm.Push_EDI();
+            asm.Call_EAX();
 
             asm.Popad();
             asm.Ret();
 
             this.sendInGame(asm.inBytes());
+
         }
 
         private void sendInGame(byte[] data)

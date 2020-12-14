@@ -1,10 +1,11 @@
 ﻿using System;
 using ConstLS.Memory;
+using ConstLS.Memory.Offsets;
 
-namespace ConstLS.Parameters
+namespace ConstLS.Unit.Parameters
 {
     
-    class MobParameters : ParametersBase
+    class MobParameters : BaseParameters
     {
         public MobParameters(ClientMemory pwClient) : base(pwClient) {}
 
@@ -12,7 +13,7 @@ namespace ConstLS.Parameters
         {
             Int32 buffer = this.Mob(number);
             if (buffer != 0) {
-                buffer = pwClient.read.as4byte(buffer + OffsetInMemory.mobType);
+                buffer = pwClient.read.as4byte(buffer + Offset.mob.type);
             }
             return buffer;
         }
@@ -21,7 +22,7 @@ namespace ConstLS.Parameters
         {
             Int32 buffer = this.Mob(number);
             if (buffer != 0) {
-                buffer = pwClient.read.as4byte(buffer + OffsetInMemory.mobWorldID);
+                buffer = pwClient.read.as4byte(buffer + Offset.mob.worldID);
             }
             return buffer;
         }
@@ -31,7 +32,7 @@ namespace ConstLS.Parameters
             Int32 buffer = this.Mob(number);
             string name = "";
             if (buffer != 0) {
-                buffer = pwClient.read.as4byte(buffer + OffsetInMemory.mobName);
+                buffer = pwClient.read.as4byte(buffer + Offset.mob.name);
                 name = pwClient.read.asString(buffer + 0x0, 256);
             }
             return name;
@@ -42,7 +43,7 @@ namespace ConstLS.Parameters
             Int32 buffer = this.Mob(number);
             float result = 0;
             if (buffer != 0) {
-                buffer = pwClient.read.as4byte(buffer + OffsetInMemory.mobDist);
+                buffer = pwClient.read.as4byte(buffer + Offset.mob.distance);
                 result = pwClient.read.asFloat(buffer + 0x225);
             }
             return result;
@@ -55,9 +56,9 @@ namespace ConstLS.Parameters
 
             Int32 buffer = this.Mob(number);
             if (buffer != 0) {
-                coordinate.x = pwClient.read.asFloat(buffer + OffsetInMemory.mobX);
-                coordinate.y = pwClient.read.asFloat(buffer + OffsetInMemory.mobY);
-                coordinate.z = pwClient.read.asFloat(buffer + OffsetInMemory.mobZ);
+                coordinate.x = pwClient.read.asFloat(buffer + Offset.mob.x);
+                coordinate.y = pwClient.read.asFloat(buffer + Offset.mob.y);
+                coordinate.z = pwClient.read.asFloat(buffer + Offset.mob.z);
             }
 
             return this.convertCoordinatesInGameFormat(coordinate);
@@ -65,17 +66,8 @@ namespace ConstLS.Parameters
 
         public float searchDistance()
         {
-            int number = -1;
             float result = 999;
-
-            for (int i = 0; i < 768; i++) {
-                if (this.mobWorldID(i) != 0) {
-                    if (this.mobType(i) == 6) {
-                        number = i;
-                        break;
-                    }
-                }
-            }
+            int number = this.mobNumber();
             if (number != -1) {
                 result = this.distance(number);
             }
@@ -85,50 +77,38 @@ namespace ConstLS.Parameters
 
         public string searchName()
         {
-            int number = -1;
             string name = "";
-
-            for (int i = 0; i < 768; i++) {
-                if (this.mobWorldID(i) != 0) {
-                    if (this.mobType(i) == 6) {
-                        number = i;
-                        break;
-                    }
-                }
-            }
+            int number = this.mobNumber();
             if (number != -1) {
                 name = this.name(number);
             }
-
             return name;
         }
 
         public int worldID()
         {
-            int number = -1;
             int WID = 0;
-
-            for (int i = 0; i < 768; i++) {
-                if (this.mobWorldID(i) != 0) {
-                    if (this.mobType(i) == 6) {
-                        number = i;
-                        break;
-                    }
-                }
-            }
+            int number = this.mobNumber();
             if (number != -1) {
                 WID = this.mobWorldID(number);
             }
-
             return WID;
         }
 
         public string mobSearch()
         {
-            int number = -1;
             Coordinates coords;
             coords.x = 0; coords.y = 0; coords.z = 0;
+            int number = this.mobNumber();
+            if (number != -1) {
+                coords = this.mobCoordination(number);
+            }
+            return "x - " + coords.x.ToString() + " // y - " + coords.y.ToString() + " // z - " + coords.z.ToString();
+        }
 
+        private int mobNumber()
+        {
+            int number = -1;
             for (int i = 0; i < 768; i++) {
                 if (this.mobWorldID(i) != 0) {
                     if (this.mobType(i) == 6) {
@@ -137,18 +117,15 @@ namespace ConstLS.Parameters
                     }
                 }
             }
-            if (number != -1) {
-                coords = this.mobCoordination(number);
-            }
-
-            return "x - " + coords.x.ToString() + " // y - " + coords.y.ToString() + " // z - " + coords.z.ToString();
+            return number;
         }
 
         private Int32 Mob(Int32 number)
         {
             Int32 buffer;
-            buffer = pwClient.read.as4byte(OffsetInMemory.GameAddress);
-            foreach (Int32 offset in OffsetInMemory.structureMobs()) {
+            buffer = pwClient.read.as4byte(Offset.gameAddress);
+            int[] structureMobs = { Offset.mob.structure1, Offset.mob.structure2, Offset.mob.structure3};
+            foreach (Int32 offset in structureMobs) {
                 buffer = pwClient.read.as4byte(buffer + offset);
             }
             buffer = pwClient.read.as4byte(buffer + number * 0x4);

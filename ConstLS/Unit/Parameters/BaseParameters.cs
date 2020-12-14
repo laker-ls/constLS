@@ -1,9 +1,11 @@
 ﻿using ConstLS.Memory;
 
-namespace ConstLS.Parameters
+namespace ConstLS.Unit.Parameters
 {
-    class ParametersBase
+    class BaseParameters
     {
+        protected ClientMemory pwClient;
+
         public struct Coordinates
         {
             public float x,
@@ -11,9 +13,7 @@ namespace ConstLS.Parameters
                          z;
         }
 
-        protected ClientMemory pwClient;
-
-        public ParametersBase(ClientMemory pwClient)
+        public BaseParameters(ClientMemory pwClient)
         {
             this.pwClient = pwClient;
         }

@@ -12,7 +12,7 @@ namespace ConstLS.Memory
         {
             IntPtr hProcess = WinApiMemory.OpenProcess(WinApiMemory.ProcessAccessFlags.All, false, processId);
             if (hProcess == IntPtr.Zero) {
-                throw new Exception("Не удалось открыть процесс для записи в выделенную память.");
+                throw new Exception("Не удалось открыть процесс.");
             }
 
             return hProcess;
@@ -72,7 +72,6 @@ namespace ConstLS.Memory
             return hProcThread;
         }
 
-        // WaitForSingleObject(hProcThread,INFINITE);
         public static uint waitForSingleObject(IntPtr hProcThread)
         {
             const int INFINITE = -1;

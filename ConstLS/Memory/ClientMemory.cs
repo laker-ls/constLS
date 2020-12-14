@@ -8,22 +8,34 @@ namespace ConstLS.Memory
         public ReadMemory read;
         public WriteMemory write;
 
-        public ClientMemory(string processName, int processNumber)
-        {
-            Process client = Process.GetProcessesByName(processName)[processNumber];
-            Int32 allocMemoryAddress = this.memoryAllocation(client.Id);
+        public Int32 id;
+        public Int32 allocMemoryFunction;
+        public Int32 allocMemoryPacket;
 
-            this.read = new ReadMemory(client.Id);
-            this.write = new WriteMemory(client.Id, allocMemoryAddress);
+        public ClientMemory(Process clientProcess)
+        {
+            this.id = clientProcess.Id;
+
+            Int32 allocMemoryAddress = this.memoryAllocation();
+            memoryAllocationOffsets(allocMemoryAddress);
+
+            this.read = new ReadMemory(clientProcess.Id);
+            this.write = new WriteMemory(this);
         }
 
-        private Int32 memoryAllocation(int id)
+        private Int32 memoryAllocation()
         {
-            IntPtr hProcess = Memory.openProcess(id);
-            Int32 allocMemoryAddress = Memory.virtualAllocEx(hProcess, 2500);
+            IntPtr hProcess = Memory.openProcess(this.id);
+            Int32 allocMemoryAddress = Memory.virtualAllocEx(hProcess, 1023);
             Memory.closeHandle(hProcess);
 
             return allocMemoryAddress;
+        }
+
+        private void memoryAllocationOffsets(Int32 allocMemoryAddress)
+        {
+            this.allocMemoryFunction = allocMemoryAddress;
+            this.allocMemoryPacket = (allocMemoryAddress + 500);
         }
     }
 }

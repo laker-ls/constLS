@@ -6,19 +6,21 @@ namespace ConstLS.Memory
     class WriteMemory
     {
         private int clientId;
-        public Int32 allocMemoryAddress;
+        private Int32 allocMemoryFunction;
+        private Int32 allocMemoryPacket;
 
-        public WriteMemory(int clientId, Int32 allocMemoryAddress)
+        public WriteMemory(ClientMemory client)
         {
-            this.clientId = clientId;
-            this.allocMemoryAddress = allocMemoryAddress;
+            this.clientId = client.id;
+            this.allocMemoryFunction = client.allocMemoryFunction;
+            this.allocMemoryPacket = client.allocMemoryPacket;
         }
 
         public void inAllocMemory(byte[] data)
         {
             IntPtr hProcess = Memory.openProcess(this.clientId);
-            Memory.writeProcessMemory(hProcess, this.allocMemoryAddress, data);
-            IntPtr hProcThread = Memory.createRemoteThread(hProcess, this.allocMemoryAddress);
+            Memory.writeProcessMemory(hProcess, this.allocMemoryFunction, data);
+            IntPtr hProcThread = Memory.createRemoteThread(hProcess, this.allocMemoryFunction);
             Memory.waitForSingleObject(hProcThread);
             Memory.closeHandle(hProcThread);
             Memory.closeHandle(hProcess);
@@ -27,7 +29,7 @@ namespace ConstLS.Memory
         public void packet(byte[] body)
         {
             IntPtr hProcess = Memory.openProcess(this.clientId);
-            Memory.writeProcessMemory(hProcess, this.allocMemoryAddress, body);
+            Memory.writeProcessMemory(hProcess, this.allocMemoryPacket, body);
             Memory.closeHandle(hProcess);
         }
     }

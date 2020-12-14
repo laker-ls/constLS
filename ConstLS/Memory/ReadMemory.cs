@@ -35,7 +35,7 @@ namespace ConstLS.Memory
 
         private byte[] readMemory(Int32 address, Int32 length)
         {
-            IntPtr hProcess = Memory.openProcess(clientId);
+            IntPtr hProcess = Memory.openProcess(this.clientId);
             byte[] memory = Memory.readProcessMemory(hProcess, address, length);
             Memory.closeHandle(hProcess);
 
