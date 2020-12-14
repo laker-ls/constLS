@@ -5,33 +5,30 @@ namespace ConstLS.Memory
 {
     class WriteMemory
     {
-        private IntPtr hProcess;
-        private Int32 pathFunction;
-        private Int32 pathParameters;
+        private int clientId;
+        public Int32 allocMemoryAddress;
 
-        public WriteMemory(IntPtr hProcess)
+        public WriteMemory(int clientId, Int32 allocMemoryAddress)
         {
-            this.hProcess = hProcess;
+            this.clientId = clientId;
+            this.allocMemoryAddress = allocMemoryAddress;
         }
 
-        public void inject(byte[] func, byte[] param)
+        public void inAllocMemory(byte[] data)
         {
-            int ipNumberWritten = 0; IntPtr lpThreadId = IntPtr.Zero;
-
-            WinApiMemory.WriteProcessMemory(this.hProcess, this.pathFunction, func, 250, out ipNumberWritten);
-            WinApiMemory.WriteProcessMemory(this.hProcess, this.pathParameters, param, 250, out ipNumberWritten);
-
-            IntPtr hProcThread = WinApiMemory.CreateRemoteThread(this.hProcess, IntPtr.Zero, 0, this.pathFunction, this.pathParameters, 0, out lpThreadId);
-            WinApiMemory.WaitForSingleObject(hProcThread, Timeout.Infinite);
-            WinApiMemory.CloseHandle(hProcThread);
+            IntPtr hProcess = Memory.openProcess(this.clientId);
+            Memory.writeProcessMemory(hProcess, this.allocMemoryAddress, data);
+            IntPtr hProcThread = Memory.createRemoteThread(hProcess, this.allocMemoryAddress);
+            Memory.waitForSingleObject(hProcThread);
+            Memory.closeHandle(hProcThread);
+            Memory.closeHandle(hProcess);
         }
 
-        public void memoryAllocation()
+        public void packet(byte[] body)
         {
-            const int MEM_COMMIT = 0x1000, PROTECTION_READ_WRITE = 0x04;
-            Int32 allocation = WinApiMemory.VirtualAllocEx(hProcess, 0, 511, MEM_COMMIT, PROTECTION_READ_WRITE);
-            this.pathFunction = allocation;
-            this.pathParameters = allocation + 64;  
+            IntPtr hProcess = Memory.openProcess(this.clientId);
+            Memory.writeProcessMemory(hProcess, this.allocMemoryAddress, body);
+            Memory.closeHandle(hProcess);
         }
     }
 }

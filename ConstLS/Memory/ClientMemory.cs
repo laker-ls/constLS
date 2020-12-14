@@ -10,15 +10,20 @@ namespace ConstLS.Memory
 
         public ClientMemory(string processName, int processNumber)
         {
-            Process[] clients = Process.GetProcessesByName(processName);
-            Process client = clients[processNumber];
+            Process client = Process.GetProcessesByName(processName)[processNumber];
+            Int32 allocMemoryAddress = this.memoryAllocation(client.Id);
 
-            const int PROCESS_All_ACCESS = 0x001F0FFF;
-            IntPtr hProcess = WinApiMemory.OpenProcess(PROCESS_All_ACCESS, false, client.Id);
+            this.read = new ReadMemory(client.Id);
+            this.write = new WriteMemory(client.Id, allocMemoryAddress);
+        }
 
-            this.read = new ReadMemory(hProcess);
+        private Int32 memoryAllocation(int id)
+        {
+            IntPtr hProcess = Memory.openProcess(id);
+            Int32 allocMemoryAddress = Memory.virtualAllocEx(hProcess, 2500);
+            Memory.closeHandle(hProcess);
 
-            this.write = new WriteMemory(hProcess);
+            return allocMemoryAddress;
         }
     }
 }

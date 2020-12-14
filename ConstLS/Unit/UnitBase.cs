@@ -8,12 +8,14 @@ namespace ConstLS.Unit
         private ClientMemory pwClient;
         public UnitParameters self;
         public MobParameters mob;
+        public Action use;
 
         public UnitBase()
         {
-            pwClient = new ClientMemory("elementclient", 0);
-            self = new UnitParameters(pwClient);
-            mob = new MobParameters(pwClient);
+            this.pwClient = new ClientMemory("elementclient", 0);
+            this.self = new UnitParameters(pwClient);
+            this.mob = new MobParameters(pwClient);
+            this.use = new Action(pwClient);
         }
 
 

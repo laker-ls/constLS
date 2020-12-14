@@ -36,6 +36,9 @@
             this.labelCoords = new System.Windows.Forms.Label();
             this.mobName1 = new System.Windows.Forms.GroupBox();
             this.labelDistance1 = new System.Windows.Forms.Label();
+            this.actionBtn = new System.Windows.Forms.Button();
+            this.labelTarget = new System.Windows.Forms.Label();
+            this.labelWorldId = new System.Windows.Forms.Label();
             this.unitName1.SuspendLayout();
             this.mobName1.SuspendLayout();
             this.SuspendLayout();
@@ -85,6 +88,7 @@
             // 
             // mobName1
             // 
+            this.mobName1.Controls.Add(this.labelWorldId);
             this.mobName1.Controls.Add(this.labelDistance1);
             this.mobName1.Controls.Add(this.labelCoords);
             this.mobName1.Location = new System.Drawing.Point(12, 128);
@@ -103,11 +107,41 @@
             this.labelDistance1.TabIndex = 5;
             this.labelDistance1.Text = "Расстояние";
             // 
+            // actionBtn
+            // 
+            this.actionBtn.Location = new System.Drawing.Point(226, 77);
+            this.actionBtn.Name = "actionBtn";
+            this.actionBtn.Size = new System.Drawing.Size(134, 23);
+            this.actionBtn.TabIndex = 6;
+            this.actionBtn.Text = "Действие";
+            this.actionBtn.UseVisualStyleBackColor = true;
+            this.actionBtn.Click += new System.EventHandler(this.Button1_Click);
+            // 
+            // labelTarget
+            // 
+            this.labelTarget.AutoSize = true;
+            this.labelTarget.Location = new System.Drawing.Point(226, 31);
+            this.labelTarget.Name = "labelTarget";
+            this.labelTarget.Size = new System.Drawing.Size(42, 13);
+            this.labelTarget.TabIndex = 7;
+            this.labelTarget.Text = "Таргет";
+            // 
+            // labelWorldId
+            // 
+            this.labelWorldId.AutoSize = true;
+            this.labelWorldId.Location = new System.Drawing.Point(272, 0);
+            this.labelWorldId.Name = "labelWorldId";
+            this.labelWorldId.Size = new System.Drawing.Size(46, 13);
+            this.labelWorldId.TabIndex = 6;
+            this.labelWorldId.Text = "WorldID";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(394, 211);
+            this.Controls.Add(this.labelTarget);
+            this.Controls.Add(this.actionBtn);
             this.Controls.Add(this.mobName1);
             this.Controls.Add(this.unitName1);
             this.Name = "MainWindow";
@@ -118,6 +152,7 @@
             this.mobName1.ResumeLayout(false);
             this.mobName1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -130,6 +165,9 @@
         private System.Windows.Forms.Label labelCoords;
         private System.Windows.Forms.GroupBox mobName1;
         private System.Windows.Forms.Label labelDistance1;
+        private System.Windows.Forms.Button actionBtn;
+        private System.Windows.Forms.Label labelTarget;
+        private System.Windows.Forms.Label labelWorldId;
     }
 }
 

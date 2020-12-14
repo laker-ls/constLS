@@ -103,10 +103,31 @@ namespace ConstLS.Parameters
             return name;
         }
 
+        public int worldID()
+        {
+            int number = -1;
+            int WID = 0;
+
+            for (int i = 0; i < 768; i++) {
+                if (this.mobWorldID(i) != 0) {
+                    if (this.mobType(i) == 6) {
+                        number = i;
+                        break;
+                    }
+                }
+            }
+            if (number != -1) {
+                WID = this.mobWorldID(number);
+            }
+
+            return WID;
+        }
+
         public string mobSearch()
         {
             int number = -1;
-            Coordinates coords = this.mobCoordination(number);
+            Coordinates coords;
+            coords.x = 0; coords.y = 0; coords.z = 0;
 
             for (int i = 0; i < 768; i++) {
                 if (this.mobWorldID(i) != 0) {
