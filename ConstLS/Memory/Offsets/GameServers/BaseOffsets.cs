@@ -17,6 +17,10 @@ namespace ConstLS.Memory.Offsets.GameServers
             public const Int32
                 structure = 0x00,
 
+                x = 0x00,
+                z = 0x00,
+                y = 0x00,
+                buffs = 0x00,
                 HP = 0x00,
                 MP = 0x00,
                 maxHP = 0x00,
@@ -46,7 +50,8 @@ namespace ConstLS.Memory.Offsets.GameServers
             public const Int32
                 packet = 0x00000000,
                 skill = 0x00000000,
-                target = 0x00000000;
+                target = 0x00000000,
+                assist = 0x00000000;
         }
     }
 }

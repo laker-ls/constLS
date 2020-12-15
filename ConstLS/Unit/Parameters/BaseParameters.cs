@@ -1,33 +1,35 @@
-﻿using ConstLS.Memory;
+﻿using ConstLS.Memory.RawParameters;
 
 namespace ConstLS.Unit.Parameters
 {
-    class BaseParameters
+    abstract class BaseParameters
     {
-        protected ClientMemory pwClient;
+        protected IRawParameters rawParameters;
 
         public struct Coordinates
         {
-            public float x,
-                         y,
-                         z;
+            public float x, y, z;
         }
 
-        public BaseParameters(ClientMemory pwClient)
+        public Coordinates coordinateInGameFormat()
         {
-            this.pwClient = pwClient;
+            Coordinates rawCoordinates = this.coordinateRaw();
+            Coordinates coordinatesInGameFormat = new Coordinates();
+            coordinatesInGameFormat.x = ((rawCoordinates.x + 4000) / 10);
+            coordinatesInGameFormat.y = ((rawCoordinates.y + 5500) / 10);
+            coordinatesInGameFormat.z = (rawCoordinates.z / 10);
+            return coordinatesInGameFormat;
         }
 
-        protected Coordinates convertCoordinatesInGameFormat(Coordinates rawCoordinate)
+        public Coordinates coordinateRaw()
         {
-            Coordinates Coordinate = new Coordinates();
-            Coordinate.x = 0; Coordinate.y = 0; Coordinate.z = 0;
-
-            Coordinate.x = ((rawCoordinate.x + 4000) / 10);
-            Coordinate.y = ((rawCoordinate.y + 5500) / 10);
-            Coordinate.z = (rawCoordinate.z / 10);
-
-            return Coordinate;
+            Coordinates rawCoordinates = new Coordinates();
+            rawCoordinates.x = this.rawParameters.x();
+            rawCoordinates.y = this.rawParameters.y();
+            rawCoordinates.z = this.rawParameters.z();
+            return rawCoordinates;
         }
+
+        public int percentHP() { return (rawParameters.HP() / (rawParameters.maxHP() / 100)); }
     }
 }

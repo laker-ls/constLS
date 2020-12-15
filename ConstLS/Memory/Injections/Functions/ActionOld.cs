@@ -1,13 +1,13 @@
 ﻿using ConstLS.Memory;
 using ConstLS.Memory.Offsets;
 
-namespace ConstLS.Unit
+namespace ConstLS.Memory.Injections
 {
-    class Action
+    class ActionOld
     {
         private ClientMemory pwClient;
 
-        public Action(ClientMemory pwClient)
+        public ActionOld(ClientMemory pwClient)
         {
             this.pwClient = pwClient;
         }
@@ -53,29 +53,6 @@ namespace ConstLS.Unit
             asm.Ret();
 
             this.sendInGame(asm.inBytes());
-        }
-
-        public void sendPacket(byte[] bodyPacket)
-        {
-            pwClient.write.packet(bodyPacket);
-
-            ASM asm = new ASM();
-            asm.Pushad();
-
-            asm.Mov_EAX(Offset.call.packet);
-
-            asm.Mov_ECX_DWORD_Ptr(Offset.baseAddress);
-            asm.Mov_ECX_DWORD_Ptr_ECX_Add(0x20);
-            asm.Mov_EDI(pwClient.allocMemoryPacket);
-            asm.Push6A(bodyPacket.Length);
-            asm.Push_EDI();
-            asm.Call_EAX();
-
-            asm.Popad();
-            asm.Ret();
-
-            this.sendInGame(asm.inBytes());
-
         }
 
         private void sendInGame(byte[] data)

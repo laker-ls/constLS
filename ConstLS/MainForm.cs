@@ -16,8 +16,6 @@ namespace ConstLS
 
         int mobWID;
 
-
-
         private void listClient()
         {
             List<string> labelsOfClients = client.displayAll();
@@ -52,6 +50,11 @@ namespace ConstLS
             } else {
                 setAllClients.Enabled = false;
             }
+
+            if (this.Tank != null) {
+                TankName.Text = Tank.self.name();
+                TankHP.Text = Tank.self.percentHP().ToString();
+            }
         }
 
         private void RefreshClientList_MouseClick(object sender, MouseEventArgs e)
@@ -64,7 +67,7 @@ namespace ConstLS
         private void UseSkill_MouseClick(object sender, EventArgs e)
         {
             byte[] bodyPacket = { 0x2e, 0x0 };
-            Druid.use.sendPacket(bodyPacket);
+            Druid.useAction.autoAttack();
         }
 
         private void SetAllClients_Click(object sender, EventArgs e)

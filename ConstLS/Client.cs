@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics;
-using System.Windows.Forms;
 using System.Collections.Generic;
 using ConstLS.Unit;
-using ConstLS.Memory.Offsets;
 
 namespace ConstLS
 {
@@ -19,8 +17,7 @@ namespace ConstLS
             List<string> listClients = new List<string>();
             for (int i = 0; i < this.clients.Length; i++) {
                 UnitBase RandomUnit = new UnitBase(this.clients[i]);
-                string unitName = RandomUnit.self.name();
-                if (unitName != "") {
+                if (RandomUnit.self.isExist()) {
                     listClients.Add("(" + RandomUnit.self.name() + ") " + this.clients[i].MainWindowTitle);
                 } else {
                     listClients.Add(this.clients[i].MainWindowTitle);

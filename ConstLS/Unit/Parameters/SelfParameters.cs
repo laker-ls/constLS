@@ -1,33 +1,48 @@
-﻿using System;
+﻿using ConstLS.Memory.RawParameters;
 using ConstLS.Memory;
-using ConstLS.Memory.Offsets;
-using ConstLS.Memory.Offsets.GameServers;
+using System;
 
 namespace ConstLS.Unit.Parameters
 {
     class SelfParameters : BaseParameters
     {
-        public SelfParameters(ClientMemory pwClient) : base(pwClient){}
+        private SelfRawParameters selfRawParameters;
 
-        public String name() {
-            string name = "";
-            int personageStructure = this.Personage();
-            if (personageStructure != 0) {
-                int buffer = pwClient.read.as4byte(personageStructure + Offset.self.name);
-                name = pwClient.read.asString(buffer + 0, 18);
-            }
-            
-            return name;
+        public SelfParameters(ClientMemory clientMemory)
+        {
+            SelfRawParameters selfRawParameters = new SelfRawParameters(clientMemory);
+            this.selfRawParameters = selfRawParameters;
+            this.rawParameters = selfRawParameters;
         }
-        public Int32 classID() { return pwClient.read.as4byte(this.Personage() + Offset.self.classID); }
-        public Int32 HP() { return pwClient.read.as4byte(this.Personage() + Offset.self.HP); }
-        public Int32 maxHP() { return pwClient.read.as4byte(this.Personage() + Offset.self.maxHP); }
-        public Int32 MP() { return pwClient.read.as4byte(this.Personage() + Offset.self.MP); }
-        public Int32 maxMP() { return pwClient.read.as4byte(this.Personage() + Offset.self.maxMP); }
 
-        private Int32 Personage() {
-            int buffer = pwClient.read.as4byte(Offset.gameAddress);
-            return pwClient.read.as4byte(buffer + Offset.self.structure);
+        public string name() { return this.selfRawParameters.name(); }
+        public string type()
+        {
+            string result = "";
+            switch (this.selfRawParameters.type()) {
+                case 0:
+                    return "Tank";
+                case 1:
+                    return "Druid";
+                case 2:
+                    return "Warrior";
+                case 3:
+                    return "Mage";
+                case 4:
+                    return "Archer";
+                case 5:
+                    return "Priest";
+                default:
+                    throw new Exception("Получено не корректное значение.");
+            }
+        }
+        public int percentMP() { return (this.selfRawParameters.MP() / (this.selfRawParameters.maxMP() / 100)); }
+
+        public bool isExist() {
+            if (this.selfRawParameters.Personage() != 0) {
+                return true;
+            }
+            return false;
         }
     }
 }
