@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConstLS.CoordinationCenter.Unit;
+using System;
 using System.Diagnostics;
 
 namespace ConstLS.Memory
@@ -36,6 +37,20 @@ namespace ConstLS.Memory
         {
             this.allocMemoryFunction = allocMemoryAddress;
             this.allocMemoryPacket = (allocMemoryAddress + 500);
+        }
+
+        public static Process connect(string nameOfPersonage)
+        {
+            Process[] pwClients = Process.GetProcessesByName("elementclient");
+
+            Process needClient = null;
+            for (int i = 0; i < pwClients.Length; i++) {
+                UnitBase RandomUnit = new UnitBase(pwClients[i]);
+                if (RandomUnit.self.isExist() && RandomUnit.self.name() == nameOfPersonage) {
+                    needClient = pwClients[i];
+                }
+            }
+            return needClient;
         }
     }
 }

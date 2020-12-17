@@ -46,41 +46,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client.cs" />
+    <Compile Include="CoordinationCenter\Coordination.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Coordination.cs" />
-    <Compile Include="Memory\ClientMemory.cs" />
+    <Compile Include="Memory\ProcessClient\ClientProcess.cs" />
     <Compile Include="Memory\ASM.cs" />
     <Compile Include="Memory\Injections\BaseInjection.cs" />
     <Compile Include="Memory\Injections\PacketLists\PacketList.cs" />
-    <Compile Include="Memory\Injections\Action.cs" />
-    <Compile Include="Memory\Injections\Pet.cs" />
+    <Compile Include="Memory\Injections\ActionInjection.cs" />
+    <Compile Include="Memory\Injections\PetInjection.cs" />
     <Compile Include="Memory\Memory.cs" />
     <Compile Include="Memory\Offsets\GameServers\BaseOffsets.cs" />
     <Compile Include="Memory\Offsets\GameServers\cloudy.cs" />
     <Compile Include="Memory\Offsets\GameServers\pwclassic_net.cs" />
     <Compile Include="Memory\Offsets\GameServers\pw_pvp.cs" />
     <Compile Include="Memory\Offsets\Offset.cs" />
-    <Compile Include="Memory\RawParameters\IRawParameters.cs" />
-    <Compile Include="Memory\ReadMemory.cs" />
-    <Compile Include="Memory\WriteMemory.cs" />
+    <Compile Include="Memory\ProcessClient\ReadClient.cs" />
+    <Compile Include="Memory\ProcessClient\WriteClient.cs" />
     <Compile Include="Memory\WinApiMemory.cs" />
-    <Compile Include="Memory\RawParameters\MobRawParameters.cs" />
+    <Compile Include="Memory\Parameters\RawParameters\MobRawParameters.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Memory\Injections\Functions\ActionOld.cs" />
-    <Compile Include="Unit\DruidUnit.cs" />
-    <Compile Include="Memory\RawParameters\SelfRawParameters.cs" />
-    <Compile Include="Unit\Parameters\BaseParameters.cs" />
-    <Compile Include="Unit\Parameters\MobParameters.cs" />
-    <Compile Include="Unit\Parameters\SelfParameters.cs" />
-    <Compile Include="Unit\TankUnit.cs" />
-    <Compile Include="Unit\UnitBase.cs" />
+    <Compile Include="CoordinationCenter\Unit\DruidUnit.cs" />
+    <Compile Include="Memory\Parameters\RawParameters\SelfRawParameters.cs" />
+    <Compile Include="Memory\Parameters\MobParameters.cs" />
+    <Compile Include="Memory\Parameters\SelfParameters.cs" />
+    <Compile Include="CoordinationCenter\Unit\TankUnit.cs" />
+    <Compile Include="CoordinationCenter\Unit\UnitBase.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

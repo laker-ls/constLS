@@ -1,4 +1,4 @@
-﻿using ConstLS.Memory;
+﻿
 using ConstLS.Memory.Offsets;
 
 namespace ConstLS.Memory.Injections
@@ -12,22 +12,39 @@ namespace ConstLS.Memory.Injections
             this.pwClient = pwClient;
         }
 
-        public void skill() // TODO: не работает
+        public void castSkill(int skillId)
         {
             ASM asm = new ASM();
             asm.Pushad();
+            asm.Mov_ECX(Offset.baseAddress);
+            asm.Mov_ECX_DWORD_Ptr_ECX();
+            asm.Mov_ECX_DWORD_Ptr_ECX_Add(0x1C);
+            asm.Mov_ECX_DWORD_Ptr_ECX_Add(Offset.self.structure);
+            asm.Push6A(-1);
+            asm.Push6A(0);
+            asm.Push6A(0);
+            asm.Mov_EAX(skillId);
+            asm.Push_EAX();
+            asm.Mov_EDX(Offset.call.skill);
+            asm.Call_EDX();
+            asm.Popad();
+            asm.Ret();
 
-            asm.Mov_EBX(Offset.call.skill);
+            this.sendInGame(asm.inBytes());
+        }
+
+        public void follow(int personageId)
+        {
+            ASM asm = new ASM();
+            asm.Pushad();
+            asm.Mov_ESI(0x00438900);
 
             asm.Mov_ECX_DWORD_Ptr(Offset.baseAddress);
-            asm.Mov_ECX_DWORD_Ptr_ECX_Add(0x1C);
-            asm.Mov_ECX_DWORD_Ptr_ECX_Add(0x20);
-            asm.Push68(-1);
             asm.Push6A(0x00);
-            asm.Push6A(0x00);
-            asm.Mov_EDX(0x7D);
-            asm.Push_EDX();
-            asm.Call_DWORD_Ptr_EBX();
+            asm.Push68(personageId);
+            asm.Mov_EDX_DWORD_Ptr_ECX_Add(0x1C);
+            asm.Mov_ECX_DWORD_Ptr_EDX_Add(0x1C);
+            asm.Call_ESI();
 
             asm.Popad();
             asm.Ret();

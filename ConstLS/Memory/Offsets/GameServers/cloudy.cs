@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConstLS.Memory.Offsets.GameServers
 {
@@ -21,12 +17,14 @@ namespace ConstLS.Memory.Offsets.GameServers
                 z = 0x00,
                 y = 0x00,
                 buffs = 0x00,
+                worldID = 0x494, // TODO: worldID перса, но это не точно, передал в пакет, не сработало.
                 HP = 0x4A8,
                 MP = 0x4AC,
                 maxHP = 0x4F0,
                 maxMP = 0x4F4,
                 name = 0x688,
-                classID = 0x00;
+                classID = 0x690,
+                targetWID = 0xC88;
         }
 
         new public struct mob

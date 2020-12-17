@@ -1,4 +1,5 @@
 ﻿using ConstLS.Memory.Offsets;
+using System;
 
 namespace ConstLS.Memory.Injections
 {
@@ -10,9 +11,32 @@ namespace ConstLS.Memory.Injections
         {
             this.pwClient = pwClient;
         }
-        
 
-        public void send(byte[] bodyPacket)
+        protected void sendWithoutParamter(byte[] packet)
+        {
+            this.send(packet);
+        }
+
+        protected void sendWithOneParameter(byte[] packet, int parameter, int destinationPacket, int lengthParameter = 4)
+        {
+            byte[] parameterAsByte = BitConverter.GetBytes(parameter);
+            byte[] modifiedPacket = packet;
+            Array.Copy(parameterAsByte, 0, modifiedPacket, destinationPacket, lengthParameter);
+            byte[] test = modifiedPacket;
+            this.send(modifiedPacket);
+        }
+
+        protected void sendWithTwoParameter(byte[] packet, int[] parameters, int[] destinationPackets, int lengthEachParameter = 4)
+        {
+            byte[] parameterAsByte = BitConverter.GetBytes(parameters[0]);
+            byte[] parameterSecondAsByte = BitConverter.GetBytes(parameters[1]);
+            byte[] modifiedPacket = packet;
+            Array.Copy(parameterAsByte, 0, modifiedPacket, destinationPackets[0], lengthEachParameter);
+            Array.Copy(parameterSecondAsByte, 0, modifiedPacket, destinationPackets[1], lengthEachParameter);
+            this.send(modifiedPacket);
+        }
+
+        private void send(byte[] bodyPacket)
         {
             pwClient.write.packet(bodyPacket);
 

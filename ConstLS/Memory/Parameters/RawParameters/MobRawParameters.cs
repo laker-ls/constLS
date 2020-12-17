@@ -1,12 +1,13 @@
 ﻿using System;
-using ConstLS.Memory;
 using ConstLS.Memory.Offsets;
 
-namespace ConstLS.Memory.RawParameters
+namespace ConstLS.Memory.Parameters.RawParameters
 {
     
-    class MobRawParameters : IRawParameters
+    class MobRawParameters
     {
+        public struct Coordinates { public float x, y, z; }
+
         private ClientMemory pwClient;
         private Int32 numberOfMobInTarget;
 
@@ -15,9 +16,15 @@ namespace ConstLS.Memory.RawParameters
             this.pwClient = clientMemory;
         }
 
-        public float x() { return pwClient.read.asFloat(this.Mob() + Offset.mob.x); }
-        public float y() { return pwClient.read.asFloat(this.Mob() + Offset.mob.y); }
-        public float z() { return pwClient.read.asFloat(this.Mob() + Offset.mob.z); }
+        public Coordinates coordinateRaw()
+        {
+            Coordinates rawCoordinates = new Coordinates();
+            rawCoordinates.x = pwClient.read.asFloat(this.Mob() + Offset.mob.x);
+            rawCoordinates.y = pwClient.read.asFloat(this.Mob() + Offset.mob.y);
+            rawCoordinates.z = pwClient.read.asFloat(this.Mob() + Offset.mob.z);
+            return rawCoordinates;
+        }
+
         public Int32 HP() { return pwClient.read.as4byte(this.Mob() + Offset.mob.HP); }
         public Int32 maxHP() { return pwClient.read.as4byte(this.Mob() + Offset.mob.maxHP); }
         public float distance() { return pwClient.read.asFloat(this.Mob() + Offset.mob.distance); }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConstLS.Memory.Offsets.GameServers
 {
@@ -21,6 +17,7 @@ namespace ConstLS.Memory.Offsets.GameServers
                 z = 0x00,
                 y = 0x00,
                 buffs = 0x00,
+                worldID = 0x00,
                 HP = 0x00,
                 MP = 0x00,
                 maxHP = 0x00,
