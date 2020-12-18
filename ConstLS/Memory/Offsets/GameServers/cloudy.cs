@@ -24,7 +24,8 @@ namespace ConstLS.Memory.Offsets.GameServers
                 maxMP = 0x4F4,
                 name = 0x688,
                 classID = 0x690,
-                targetWID = 0xC88;
+                targetWID = 0xC88,
+                activePetId = 0x7CC; // TODO: проверить, является ли этот оффсет id пета дру
         }
 
         new public struct mob
@@ -39,10 +40,13 @@ namespace ConstLS.Memory.Offsets.GameServers
                 y = 0x044,
                 type = 0x0B4,
                 worldID = 0x120,
+                lvl = 0x128,
                 HP = 0x130,
                 maxHP = 0x178,
                 feature = 0x268,
-                distance = 0x298;
+                distance = 0x298,
+                action = 0x2DC,
+                attack = 0x2C8;
         }
 
         new public struct call

@@ -3,7 +3,7 @@ using ConstLS.Memory;
 using ConstLS.Memory.Injections;
 using ConstLS.Memory.Parameters;
 
-namespace ConstLS.CoordinationCenter.Unit
+namespace ConstLS.CoordinationCenter.Units
 {
     class UnitBase
     {
@@ -15,13 +15,11 @@ namespace ConstLS.CoordinationCenter.Unit
 
         public UnitBase(Process clientProcess)
         {
-            if (clientProcess != null) {
-                this.clientMemory = new ClientMemory(clientProcess);
+            this.clientMemory = new ClientMemory(clientProcess);
 
-                this.self = new SelfParameters(this.clientMemory);
-                this.mob = new MobParameters(this.clientMemory);
-                this.action = new ActionInjection(this.clientMemory);
-            }
+            this.self = new SelfParameters(this.clientMemory);
+            this.mob = new MobParameters(this.clientMemory);
+            this.action = new ActionInjection(this.clientMemory);
         }
     }
 }

@@ -1,26 +1,37 @@
 ﻿using System;
 using System.Windows.Forms;
-using ConstLS.CoordinationCenter.Unit;
 using ConstLS.Memory;
 using System.Drawing;
 using ConstLS.CoordinationCenter;
 using System.Diagnostics;
+using ConstLS.CoordinationCenter.Units;
+using ConstLS.KeyAndMouseHook;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ConstLS
 {
     public partial class MainWindow : Form
     {
-        Coordination CoordinationCenter;
+        protected readonly GlobalHook hook;
+        private Coordination CoordinationCenter;
 
         public MainWindow()
         {
             InitializeComponent();
+            this.hook = new GlobalHook();
             this.CoordinationCenter = new Coordination();
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            
+            //hook.KeyDown += (s, ev) => {
+            //    if (ev.KeyCode == Keys.LShiftKey) {
+            //        if (CoordinationCenter.Tank != null && CoordinationCenter.Druid != null) {
+            //            this.CoordinationCenter.launch();
+            //        }
+            //    }
+            //};
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -53,6 +64,21 @@ namespace ConstLS
                 druidIsFound.Text = "Не найден";
                 druidIsFound.ForeColor = Color.Red;
             }
+        }
+
+        private void ListOfClients_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainWindow_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+
         }
     }
 }

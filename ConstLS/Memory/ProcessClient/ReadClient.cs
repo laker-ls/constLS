@@ -24,6 +24,12 @@ namespace ConstLS.Memory
             return BitConverter.ToSingle(buffer, 0);
         }
 
+        public bool asBoolean(Int32 address)
+        {
+            byte[] buffer = this.readMemory(address, 4);
+            return BitConverter.ToBoolean(buffer, 0);
+        }
+
         public String asString(Int32 address, Int32 length)
         {
             byte[] buffer = this.readMemory(address, length);

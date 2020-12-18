@@ -7,17 +7,42 @@ namespace ConstLS.Memory.Parameters
     {
         public MobParameters(ClientMemory clientMemory) :base(clientMemory) {}
 
-        public string typeAsString()
+        public string type()
         {
-            switch (this.type()) {
-                case 6:
-                    return "Mob";
-                case 7:
-                    return "NPC";
-                case 9:
-                    return "Pet";
-                default:
-                    throw new Exception("Получено не корректно значение.");
+            switch (this.rawType()) {
+                case 6: return "Mob";
+                case 7: return "NPC";
+                case 9: return "Pet";
+                default: throw new Exception("Получено не корректно значение.");
+            }
+        }
+
+        public string feature()
+        {
+            switch (this.rawFeature()) {
+                case 0: return "";
+                case 1: return "acceleration";
+                case 2: return "pacifist";
+                case 3: return "pDef";
+                case 4: return "mDef";
+                case 5: return "pAtack";
+                case 6: return "mAtack";
+                case 7: return "berserk";
+                case 8: return "increasedHP";
+                case 9: return "weak";
+                default: throw new Exception("Получено не корректное значение.");
+            }
+        }
+
+        public string action()
+        {
+            switch (this.rawAction()) {
+                case 0: return "passive";
+                case 2: return "pAtack";
+                case 3: return "mAtack";
+                case 4: return "died";
+                case 5: return "moving";
+                default: throw new Exception("Получено не корректное значение");
             }
         }
 
@@ -31,6 +56,11 @@ namespace ConstLS.Memory.Parameters
             return coordinatesInGameFormat;
         }
 
-        public int percentHP() { return (this.HP() / (this.maxHP() / 100)); }
+        public int HPpercent() {
+            if (this.HP() != 0) {
+                return (this.HP() / (this.HPmax() / 100));
+            }
+            return 0;
+        }
     }
 }

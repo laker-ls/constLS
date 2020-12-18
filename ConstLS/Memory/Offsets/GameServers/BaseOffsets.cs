@@ -23,7 +23,9 @@ namespace ConstLS.Memory.Offsets.GameServers
                 maxHP = 0x00,
                 maxMP = 0x00,
                 name = 0x00,
-                classID = 0x00;
+                classID = 0x00,
+                targetWID = 0x00,
+                activePetWId = 0x00;
         }
 
         public struct mob
@@ -38,8 +40,13 @@ namespace ConstLS.Memory.Offsets.GameServers
                 y = 0x00,
                 type = 0x00,
                 worldID = 0x00,
+                lvl = 0x00,
+                HP = 0x00,
+                maxHP = 0x00,
+                feature = 0x00,
                 distance = 0x00,
-                name = 0x00;
+                action = 0x00,
+                attack = 0x0;
         }
 
         public struct call

@@ -50,6 +50,7 @@
             this.listOfClients.TabIndex = 3;
             this.listOfClients.TabStop = false;
             this.listOfClients.Text = "Персонажи";
+            this.listOfClients.Enter += new System.EventHandler(this.ListOfClients_Enter);
             // 
             // druidIsFound
             // 

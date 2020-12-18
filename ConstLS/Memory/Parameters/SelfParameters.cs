@@ -10,20 +10,13 @@ namespace ConstLS.Memory.Parameters
         public string typeAsString()
         {
             switch (this.type()) {
-                case 0:
-                    return "Warrior";
-                case 1:
-                    return "Mage";
-                case 3:
-                    return "Druid";
-                case 4:
-                    return "Tank";
-                case 6:
-                    return "Archer";
-                case 7:
-                    return "Priest";
-                default:
-                    throw new Exception("Получено не корректное значение.");
+                case 0: return "Warrior";
+                case 1: return "Mage";
+                case 3: return "Druid";
+                case 4: return "Tank";
+                case 6: return "Archer";
+                case 7: return "Priest";
+                default: throw new Exception("Получено не корректное значение.");
             }
         }
         
@@ -37,8 +30,8 @@ namespace ConstLS.Memory.Parameters
             return coordinatesInGameFormat;
         }
 
-        public int percentHP() { return (this.HP() / (this.maxHP() / 100)); }
-        public int percentMP() { return (this.MP() / (this.maxMP() / 100)); }
+        public int HPpercent() { return (this.HP() / (this.HPmax() / 100)); }
+        public int MPpercent() { return (this.MP() / (this.MPmax() / 100)); }
 
         public bool isExist() {
             if (this.Personage() != 0) {

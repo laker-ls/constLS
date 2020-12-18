@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace ConstLS.CoordinationCenter.Unit
+namespace ConstLS.CoordinationCenter.Units
 {
     class TankUnit : UnitBase
     {

@@ -9,11 +9,27 @@ namespace ConstLS.Memory.Parameters.RawParameters
         public struct Coordinates { public float x, y, z; }
 
         private ClientMemory pwClient;
-        private Int32 numberOfMobInTarget;
+        private Int32 currentMobWID;
 
         public MobRawParameters(ClientMemory clientMemory)
         {
             this.pwClient = clientMemory;
+        }
+
+        public void setCurrent(Int32 needWID)
+        {
+            this.currentMobWID = -1;
+            for (int i = 0; i < 768; i++) {
+                Int32 randomMob = this.Mob(i);
+                if (randomMob != 0) {
+                    Int32 mobWID = pwClient.read.as4byte(this.Mob(i) + Offset.mob.worldID);
+                    Int32 mobType = pwClient.read.as4byte(this.Mob(i) + Offset.mob.type);
+                    if (mobWID == needWID && mobType == 6) {
+                        this.currentMobWID = i;
+                        break;
+                    }
+                }
+            }
         }
 
         public Coordinates coordinateRaw()
@@ -25,29 +41,30 @@ namespace ConstLS.Memory.Parameters.RawParameters
             return rawCoordinates;
         }
 
+        public Int32 lvl() { return pwClient.read.as4byte(this.Mob() + Offset.mob.lvl); }
         public Int32 HP() { return pwClient.read.as4byte(this.Mob() + Offset.mob.HP); }
-        public Int32 maxHP() { return pwClient.read.as4byte(this.Mob() + Offset.mob.maxHP); }
+        public Int32 HPmax() { return pwClient.read.as4byte(this.Mob() + Offset.mob.maxHP); }
         public float distance() { return pwClient.read.asFloat(this.Mob() + Offset.mob.distance); }
         public Int32 worldID() { return pwClient.read.as4byte(this.Mob() + Offset.mob.worldID); }
-        public Int32 type() { return pwClient.read.as4byte(this.Mob() + Offset.mob.type); }
+        public bool attack() { return pwClient.read.asBoolean(this.Mob() + Offset.mob.attack); }
 
-        public void mobSearchByWid(Int32 needWID)
+        protected Int32 rawType() { return pwClient.read.as4byte(this.Mob() + Offset.mob.type); }
+        protected Int32 rawFeature() { return pwClient.read.as4byte(this.Mob() + Offset.mob.feature); }
+        protected Int32 rawAction() { return pwClient.read.as4byte(this.Mob() + Offset.mob.action); }
+
+        public bool isExist()
         {
-            this.numberOfMobInTarget = -1;
-            for (int i = 0; i < 768; i++) {
-                Int32 mobWID = pwClient.read.as4byte(this.Mob(i) + Offset.mob.worldID);
-                Int32 mobType = pwClient.read.as4byte(this.Mob(i) + Offset.mob.type);
-                if (mobWID == needWID && mobType == 6) {
-                    this.numberOfMobInTarget = i;
-                    break;
-                }
+            this.setCurrent();
+            if (this.currentMobWID != -1) {
+                return true;
             }
+            return false;
         }
 
-        private Int32 Mob(Int32 number = 999)
+        protected Int32 Mob(Int32 number = 999)
         {
             if (number == 999) {
-                number = this.numberOfMobInTarget;
+                number = this.currentMobWID;
             }
             Int32 buffer;
             buffer = pwClient.read.as4byte(Offset.gameAddress);
@@ -55,8 +72,10 @@ namespace ConstLS.Memory.Parameters.RawParameters
             buffer = pwClient.read.as4byte(buffer + Offset.mob.structure2);
             buffer = pwClient.read.as4byte(buffer + Offset.mob.structure3);
             buffer = pwClient.read.as4byte(buffer + number * 0x4);
-            buffer = pwClient.read.as4byte(buffer + 0x4);
-            return buffer;
+            if (buffer != 0) {
+                return pwClient.read.as4byte(buffer + 0x4);
+            }
+            return 0;
         }
     }
 }
