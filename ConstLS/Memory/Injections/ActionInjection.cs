@@ -14,7 +14,7 @@ namespace ConstLS.Memory.Injections
 
         
         public void castSkill(int skillId) { this.function.castSkill(skillId); }
-        public void follow(int personageId) { this.function.follow(personageId); }
+        public void walk(float x, float y, float z) { this.function.walk(x, y, z); }
 
         public void inMeditation() { this.sendWithoutParamter(PacketList.action.inMeditation); }
         public void outMeditation() { this.sendWithoutParamter(PacketList.action.outMeditation); }

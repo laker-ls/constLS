@@ -8,8 +8,8 @@ namespace ConstLS.CoordinationCenter.Units
     class UnitBase
     {
         public SelfParameters self;
-        public MobParameters mob;
-        public ActionInjection action;
+        protected MobParameters mob;
+        protected ActionInjection action;
 
         protected ClientMemory clientMemory;
 

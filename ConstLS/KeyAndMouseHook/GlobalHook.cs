@@ -5,6 +5,8 @@ using System.Windows.Forms;
 /**
  * Данный класс по работе с хуками был взят в ответе stackoverflow.
  * Автор Нина Лисицинская https://ru.stackoverflow.com/users/264984/%d0%9d%d0%b8%d0%bd%d0%b0-%d0%9b%d0%b8%d1%81%d0%b8%d1%86%d0%b8%d0%bd%d1%81%d0%ba%d0%b0%d1%8f
+ * 
+ * Удалил хуки для мыши (при остановке процесса на брейкпоинте в течении нескольких секунд тормозил указатель мыши).
  */
 
 namespace ConstLS.KeyAndMouseHook
@@ -33,23 +35,10 @@ namespace ConstLS.KeyAndMouseHook
                     public IntPtr dwExtraInfo;
                 }
 
-                // MSLLHOOKSTRUCT
-                // https://msdn.microsoft.com/ru-ru/library/windows/desktop/ms644970(v=vs.85).aspx
-                public struct MouseHookStruct
-                {
-                    public int X;
-                    public int Y;
-                    public uint MouseData;
-                    public uint Flags;
-                    public uint Time;
-                    public IntPtr dwExtraInfo;
-                }
-
                 // Константы WH_*
                 public enum WindowsHook : int
                 {
                     KeyboardLowLevel = 13,
-                    MouseLowLevel = 14,
                 }
 
                 // Константы WM_*
@@ -75,24 +64,13 @@ namespace ConstLS.KeyAndMouseHook
                 public delegate int KeyboardHookProc(int code,
                     WindowsMessage wParam, ref KeyboardHookStruct lParam);
 
-                public delegate int MouseHookProc(int code,
-                    WindowsMessage wParam, ref MouseHookStruct lParam);
-
                 [DllImport("user32")]
                 public static extern int CallNextHookEx(IntPtr hHk, int nCode,
                     WindowsMessage wParam, ref KeyboardHookStruct lParam);
 
                 [DllImport("user32")]
-                public static extern int CallNextHookEx(IntPtr hHk, int nCode,
-                    WindowsMessage wParam, ref MouseHookStruct lParam);
-
-                [DllImport("user32")]
                 public static extern IntPtr SetWindowsHookEx(WindowsHook idHook,
                     KeyboardHookProc lpfn, IntPtr hMod, uint dwThreadId);
-
-                [DllImport("user32")]
-                public static extern IntPtr SetWindowsHookEx(WindowsHook idHook,
-                    MouseHookProc lpfn, IntPtr hMod, uint dwThreadId);
 
                 [DllImport("user32")]
                 public static extern bool UnhookWindowsHookEx(IntPtr hHk);
@@ -101,18 +79,13 @@ namespace ConstLS.KeyAndMouseHook
 
         // Дескрипторы хуков
         private readonly IntPtr _keyboardHookHandle;
-        private readonly IntPtr _mouseHookHandle;
 
         // Хуки
         private readonly WinAPI.User32.KeyboardHookProc _keyboardCallback;
-        private readonly WinAPI.User32.MouseHookProc _mouseCallback;
 
         // События
         public event KeyEventHandler KeyDown = (s, e) => { };
         public event KeyEventHandler KeyUp = (s, e) => { };
-        public event MouseEventHandler MouseButtonDown = (s, e) => { };
-        public event MouseEventHandler MouseButtonUp = (s, e) => { };
-        public event MouseEventHandler MouseMove = (s, e) => { };
 
         public GlobalHook()
         {
@@ -148,54 +121,6 @@ namespace ConstLS.KeyAndMouseHook
                 return WinAPI.User32.CallNextHookEx(_keyboardHookHandle, code, wParam, ref lParam);
             });
 
-            _mouseCallback = new WinAPI.User32.MouseHookProc((int code,
-                WinAPI.User32.WindowsMessage wParam, ref WinAPI.User32.MouseHookStruct lParam) =>
-            {
-                // Если code < 0, мы не должны обрабатывать это сообщение системы
-                if (code >= 0) {
-                    // В зависимости от типа пришедшего сообщения вызовем то или иное событие
-                    switch (wParam) {
-                        case WinAPI.User32.WindowsMessage.MouseMove:
-                            MouseMove(this,
-                                new MouseEventArgs(MouseButtons.None, 0, lParam.X, lParam.Y, 0));
-                            break;
-
-                        case WinAPI.User32.WindowsMessage.LeftButtonDown:
-                            MouseButtonDown(this,
-                                new MouseEventArgs(MouseButtons.Left, 0, lParam.X, lParam.Y, 0));
-                            break;
-
-                        case WinAPI.User32.WindowsMessage.RightButtonDown:
-                            MouseButtonDown(this,
-                                new MouseEventArgs(MouseButtons.Right, 0, lParam.X, lParam.Y, 0));
-                            break;
-
-                        case WinAPI.User32.WindowsMessage.MiddleButtonDown:
-                            MouseButtonDown(this,
-                                new MouseEventArgs(MouseButtons.Middle, 0, lParam.X, lParam.Y, 0));
-                            break;
-
-                        case WinAPI.User32.WindowsMessage.LeftButtonUp:
-                            MouseButtonUp(this,
-                                new MouseEventArgs(MouseButtons.Left, 0, lParam.X, lParam.Y, 0));
-                            break;
-
-                        case WinAPI.User32.WindowsMessage.RightButtonUp:
-                            MouseButtonUp(this,
-                                new MouseEventArgs(MouseButtons.Right, 0, lParam.X, lParam.Y, 0));
-                            break;
-
-                        case WinAPI.User32.WindowsMessage.MiddleButtonUp:
-                            MouseButtonUp(this,
-                                new MouseEventArgs(MouseButtons.Middle, 0, lParam.X, lParam.Y, 0));
-                            break;
-                    }
-                }
-
-                // Вызовем следующий обработчик
-                return WinAPI.User32.CallNextHookEx(_mouseHookHandle, code, wParam, ref lParam);
-            });
-
             // В SetWindowsHookEx следует передать дескриптор библиотеки user32.dll
             // Библиотека user32 всё равно всегда загружена в приложениях .NET,
             // хранить и освобождать дескриптор или что-либо ещё с ним делать нет необходимости
@@ -204,9 +129,6 @@ namespace ConstLS.KeyAndMouseHook
             // Установим хуки
             _keyboardHookHandle = WinAPI.User32.SetWindowsHookEx(
                 WinAPI.User32.WindowsHook.KeyboardLowLevel, _keyboardCallback, user32Handle, 0);
-
-            _mouseHookHandle = WinAPI.User32.SetWindowsHookEx(
-                WinAPI.User32.WindowsHook.MouseLowLevel, _mouseCallback, user32Handle, 0);
         }
 
         #region IDisposable implementation
@@ -224,7 +146,6 @@ namespace ConstLS.KeyAndMouseHook
 
             // Удалим хуки
             WinAPI.User32.UnhookWindowsHookEx(_keyboardHookHandle);
-            WinAPI.User32.UnhookWindowsHookEx(_mouseHookHandle);
         }
 
         ~GlobalHook()

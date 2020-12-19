@@ -1,10 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
+﻿using System;
 
 /**
  * This code (v0.3) was originally written 03.02.2011 by TBXin (https://pwframework.codeplex.com/) and licensed under GPLv2. 
@@ -232,6 +226,16 @@ namespace ConstLS.Memory
             else
             {
                 this.Asmcode = this.Asmcode + "898424" + intTohex(addre, 8);
+            }
+        }
+
+        public void Mov_DWORD_Ptr_ECX_ADD_EAX(int addre)
+        {
+            if ((addre <= 127) && (addre >= -128)) {
+                this.Asmcode = this.Asmcode + "8941" + intTohex(addre, 2);
+            }
+            else {
+                this.Asmcode = this.Asmcode + "8981" + intTohex(addre, 8);
             }
         }
 
@@ -1392,13 +1396,14 @@ namespace ConstLS.Memory
 
         public void Lea_EAX_DWORD_Ptr_ESP_Add(int addre)
         {
+            string test = "8D44" + intTohex(addre, 2);
             if ((addre <= 127) && (addre >= -128))
             {
-                this.Asmcode = this.Asmcode + "8D40" + intTohex(addre, 2);
+                this.Asmcode = this.Asmcode + "8D4424" + intTohex(addre, 2);
             }
             else
             {
-                this.Asmcode = this.Asmcode + "8D80" + intTohex(addre, 8);
+                this.Asmcode = this.Asmcode + "8D8424" + intTohex(addre, 8);
             }
         }
 

@@ -1,4 +1,7 @@
 ﻿using ConstLS.CoordinationCenter.Units;
+using ConstLS.KeyAndMouseHook;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace ConstLS.CoordinationCenter
 {
@@ -7,11 +10,34 @@ namespace ConstLS.CoordinationCenter
         public TankUnit Tank;
         public DruidUnit Druid;
 
-        public void launch()
+        private GlobalHook hook;
+
+        public Coordination()
         {
-            int targetOfTank = this.Tank.self.targetWID();
+            this.eventByPressButton();
+        }
+
+        private void eventByPressButton()
+        {
+            this.hook = new GlobalHook();
+
+            hook.KeyDown += (s, ev) =>
+            {
+                if (ev.KeyCode == Keys.LShiftKey) {
+                    if (this.Tank != null && this.Druid != null) {
+                        this.assistFirstSubgroup();
+                    }
+                }
+            };
+        }
+
+        public void assistFirstSubgroup()
+        {
+            int targetOfTank = this.Tank.target();
             if (targetOfTank != 0) {
                 this.Druid.assist(targetOfTank);
+            } else {
+                this.Druid.follow(this.Tank.selfCoordinatesRaw());
             }
         }
     }

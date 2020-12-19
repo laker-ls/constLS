@@ -62,5 +62,13 @@ namespace ConstLS.Memory.Parameters
             }
             return 0;
         }
+
+        public bool isExist()
+        {
+            if (this.currentMobWID != -1) {
+                return true;
+            }
+            return false;
+        }
     }
 }

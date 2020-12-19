@@ -8,8 +8,8 @@ namespace ConstLS.Memory.Parameters.RawParameters
     {
         public struct Coordinates { public float x, y, z; }
 
+        public Int32 currentMobWID = -1;
         private ClientMemory pwClient;
-        private Int32 currentMobWID;
 
         public MobRawParameters(ClientMemory clientMemory)
         {
@@ -51,15 +51,6 @@ namespace ConstLS.Memory.Parameters.RawParameters
         protected Int32 rawType() { return pwClient.read.as4byte(this.Mob() + Offset.mob.type); }
         protected Int32 rawFeature() { return pwClient.read.as4byte(this.Mob() + Offset.mob.feature); }
         protected Int32 rawAction() { return pwClient.read.as4byte(this.Mob() + Offset.mob.action); }
-
-        public bool isExist()
-        {
-            this.setCurrent();
-            if (this.currentMobWID != -1) {
-                return true;
-            }
-            return false;
-        }
 
         protected Int32 Mob(Int32 number = 999)
         {

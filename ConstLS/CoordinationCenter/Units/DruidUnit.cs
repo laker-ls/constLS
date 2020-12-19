@@ -4,6 +4,8 @@ using ConstLS.CoordinationCenter.Unit.idOfSkills;
 using ConstLS.CoordinationCenter.Units.Conditions.Attack;
 using ConstLS.Memory.Parameters;
 using ConstLS.CoordinationCenter.Units.Conditions.Healing;
+using ConstLS.CoordinationCenter.Units.Actions;
+using static ConstLS.Memory.Parameters.RawParameters.SelfRawParameters;
 
 namespace ConstLS.CoordinationCenter.Units
 {
@@ -12,10 +14,12 @@ namespace ConstLS.CoordinationCenter.Units
         public MobParameters pet;
         public PetInjection usePet;
 
+        private DruidSkills skill;
+
         private DruidConditionsAttack conditionAttack;
         private DruidConditionsHealing conditionHealing;
 
-        private DruidSkills skill;
+        private DruidAttackAction attack;
 
         public DruidUnit(Process clientProcess) : base(clientProcess)
         {
@@ -25,19 +29,23 @@ namespace ConstLS.CoordinationCenter.Units
             this.conditionAttack = new DruidConditionsAttack();
             this.conditionHealing = new DruidConditionsHealing();
 
-            this.skill = new DruidSkills();
+            this.attack = new DruidAttackAction(this.action, this.conditionAttack);
         }
 
         public void assist(int targetWID)
         {
             this.setUpSetters(targetWID);
-            this.mainActions();
-
             this.action.selectTarget(targetWID);
-            if (conditionAttack.isNeedStun()) {
-                this.action.castSkill(skill.metalRoi);
-            }
-            this.action.castSkill(skill.roi);
+
+            //while (conditionAttack.isMobAlive()) {
+                this.mainActions();
+                this.attack.singleTarget();
+            //}
+        }
+
+        public void follow(Coordinates coordinatesOfFollow)
+        {
+            this.action.walk(coordinatesOfFollow.x, coordinatesOfFollow.y, coordinatesOfFollow.z);
         }
 
         private void mainActions()
@@ -59,6 +67,7 @@ namespace ConstLS.CoordinationCenter.Units
         {
             this.mob.setCurrent(targetWID);
             this.pet.setCurrent(this.self.petOfDruidWID());
+
             this.conditionAttack.setMob(this.mob);
             this.conditionHealing.setPet(this.pet);
         }

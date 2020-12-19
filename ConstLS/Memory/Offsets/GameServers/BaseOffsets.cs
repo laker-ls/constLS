@@ -16,6 +16,7 @@ namespace ConstLS.Memory.Offsets.GameServers
                 x = 0x00,
                 z = 0x00,
                 y = 0x00,
+                skillFlag = 0x00,
                 buffs = 0x00,
                 worldID = 0x00,
                 HP = 0x00,
@@ -55,7 +56,10 @@ namespace ConstLS.Memory.Offsets.GameServers
                 packet = 0x00000000,
                 skill = 0x00000000,
                 target = 0x00000000,
-                assist = 0x00000000;
+                assist = 0x00000000,
+                walk1 = 0x00000000,
+                walk2 = 0x00000000,
+                walk3 = 0x00000000;
         }
     }
 }

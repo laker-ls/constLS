@@ -13,9 +13,10 @@ namespace ConstLS.Memory.Offsets.GameServers
             public const Int32
                 structure = 0x34,
 
-                x = 0x00,
-                z = 0x00,
-                y = 0x00,
+                x = 0x7C,
+                z = 0x80,
+                y = 0x84,
+                skillFlag = 0xE0, // 0 = каст скила
                 buffs = 0x00,
                 worldID = 0x494, // TODO: worldID перса, но это не точно, передал в пакет, не сработало.
                 HP = 0x4A8,
@@ -55,7 +56,10 @@ namespace ConstLS.Memory.Offsets.GameServers
                 packet = 0x006F55E0,
                 skill = 0x00475740,
                 target = 0x006E8060,
-                assist = 0x00725750;
+                assist = 0x00725750,
+                walk1 = 0x00484690,
+                walk2 = 0x004889B0,
+                walk3 = 0x00484B00;
         }
     }
 }

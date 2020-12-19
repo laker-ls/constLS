@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoordinationCenter\Coordination.cs" />
+    <Compile Include="CoordinationCenter\Units\Actions\DruidAttackAction.cs" />
+    <Compile Include="CoordinationCenter\Units\Actions\UnitItemsAction.cs" />
     <Compile Include="CoordinationCenter\Units\Conditions\Attack\DruidConditionsAttack.cs" />
     <Compile Include="CoordinationCenter\Units\Conditions\Healing\DruidConditionsHealing.cs" />
     <Compile Include="CoordinationCenter\Units\IdOfSkills\DruidSkills.cs" />

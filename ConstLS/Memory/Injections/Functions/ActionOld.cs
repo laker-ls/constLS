@@ -12,13 +12,28 @@ namespace ConstLS.Memory.Injections
             this.pwClient = pwClient;
         }
 
+        public void target(int mobWorldID)
+        {
+            ASM asm = new ASM();
+            asm.Pushad();
+            asm.Mov_EDI(mobWorldID);
+            asm.Mov_EDX(Offset.call.target);
+            asm.Mov_EAX_DWORD_Ptr(0x00A591E0);
+            asm.Mov_ECX_DWORD_Ptr_EAX_Add(0x20);
+            asm.Add_ECX(0xEC);
+            asm.Push_EDI();
+            asm.Call_EDX();
+            asm.Popad();
+            asm.Ret();
+
+            this.sendInGame(asm.inBytes());
+        }
+
         public void castSkill(int skillId)
         {
             ASM asm = new ASM();
             asm.Pushad();
-            asm.Mov_ECX(Offset.baseAddress);
-            asm.Mov_ECX_DWORD_Ptr_ECX();
-            asm.Mov_ECX_DWORD_Ptr_ECX_Add(0x1C);
+            asm.Mov_ECX_DWORD_Ptr(Offset.gameAddress);
             asm.Mov_ECX_DWORD_Ptr_ECX_Add(Offset.self.structure);
             asm.Push6A(-1);
             asm.Push6A(0);
@@ -33,38 +48,48 @@ namespace ConstLS.Memory.Injections
             this.sendInGame(asm.inBytes());
         }
 
-        public void follow(int personageId)
+        public void walk(float x, float y, float z)
         {
-            ASM asm = new ASM();
-            asm.Pushad();
-            asm.Mov_ESI(0x00438900);
+            int walkMode = 0; // 0 - передвижение по земле, 1 - полёт
 
-            asm.Mov_ECX_DWORD_Ptr(Offset.baseAddress);
-            asm.Push6A(0x00);
-            asm.Push68(personageId);
-            asm.Mov_EDX_DWORD_Ptr_ECX_Add(0x1C);
-            asm.Mov_ECX_DWORD_Ptr_EDX_Add(0x1C);
-            asm.Call_ESI();
-
-            asm.Popad();
-            asm.Ret();
-
-            this.sendInGame(asm.inBytes());
-        }
-
-        public void target(int mobWorldID)
-        {
             ASM asm = new ASM();
             asm.Pushad();
 
-            asm.Mov_EDI(mobWorldID);
-            asm.Mov_EDX(Offset.call.target);
-
-            asm.Mov_EAX_DWORD_Ptr(0x00A591E0);
-            asm.Mov_ECX_DWORD_Ptr_EAX_Add(0x20);
-            asm.Add_ECX(0xEC);
-            asm.Push_EDI();
+            asm.Mov_EAX_DWORD_Ptr(Offset.gameAddress);
+            asm.Mov_ESI_DWORD_Ptr_EAX_Add(Offset.self.structure);
+            asm.Mov_ECX_DWORD_Ptr_ESI_Add(0x1050);
+            asm.Push68(0x01);
+            asm.Mov_EDX(Offset.call.walk1);
             asm.Call_EDX();
+
+            asm.Mov_EDI_EAX();
+            asm.Lea_EAX_DWORD_Ptr_ESP_Add(0x18);
+            asm.Push_EAX();
+            asm.Push6A(walkMode);
+            asm.Mov_ECX_EDI();
+            asm.Mov_EBX(Offset.call.walk2);
+            asm.Call_EBX();
+
+            asm.Mov_ECX_DWORD_Ptr_ESI_Add(0x1050);
+            asm.Push6A(0x00);
+            asm.Push6A(0x01);
+            asm.Push_EDI();
+            asm.Push6A(0x01);
+            asm.Mov_EBX(Offset.call.walk3);
+            asm.Call_EBX();
+
+            asm.Mov_EAX_DWORD_Ptr(Offset.gameAddress);
+            asm.Mov_EAX_DWORD_Ptr_EAX_Add(Offset.self.structure);
+            asm.Mov_EAX_DWORD_Ptr_EAX_Add(0x1050);
+            asm.Mov_EAX_DWORD_Ptr_EAX_Add(0x30);
+            asm.Mov_ECX_DWORD_Ptr_EAX_Add(0x04);
+            asm.Mov_EAX(x);
+            asm.Mov_DWORD_Ptr_ECX_ADD_EAX(0x20);
+            asm.Mov_EAX(z);
+            asm.Mov_DWORD_Ptr_ECX_ADD_EAX(0x24);
+            asm.Mov_EAX(y);
+            asm.Mov_DWORD_Ptr_ECX_ADD_EAX(0x28);
+
 
             asm.Popad();
             asm.Ret();

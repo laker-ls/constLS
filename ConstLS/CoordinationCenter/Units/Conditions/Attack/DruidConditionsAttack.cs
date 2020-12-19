@@ -21,5 +21,11 @@ namespace ConstLS.CoordinationCenter.Units.Conditions.Attack
 
             return (mobHaveLotHP && (mobTooClose || mobIsFaster || mobHaveIncreasedHP));
         }
+
+        public bool isMobAlive()
+        {
+            string status = this.mob.action();
+            return (this.mob.action() != "died");
+        }
     }
 }

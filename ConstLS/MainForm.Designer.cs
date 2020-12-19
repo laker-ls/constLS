@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.listOfClients = new System.Windows.Forms.GroupBox();
+            this.updateClients = new System.Windows.Forms.Button();
             this.druidIsFound = new System.Windows.Forms.Label();
             this.tankIsFound = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -40,6 +41,7 @@
             // 
             // listOfClients
             // 
+            this.listOfClients.Controls.Add(this.updateClients);
             this.listOfClients.Controls.Add(this.druidIsFound);
             this.listOfClients.Controls.Add(this.tankIsFound);
             this.listOfClients.Controls.Add(this.label2);
@@ -50,7 +52,16 @@
             this.listOfClients.TabIndex = 3;
             this.listOfClients.TabStop = false;
             this.listOfClients.Text = "Персонажи";
-            this.listOfClients.Enter += new System.EventHandler(this.ListOfClients_Enter);
+            // 
+            // updateClients
+            // 
+            this.updateClients.Location = new System.Drawing.Point(6, 146);
+            this.updateClients.Name = "updateClients";
+            this.updateClients.Size = new System.Drawing.Size(106, 23);
+            this.updateClients.TabIndex = 4;
+            this.updateClients.Text = "Обновить";
+            this.updateClients.UseVisualStyleBackColor = true;
+            this.updateClients.Click += new System.EventHandler(this.UpdateClients_Click);
             // 
             // druidIsFound
             // 
@@ -119,6 +130,7 @@
         private System.Windows.Forms.Label druidIsFound;
         private System.Windows.Forms.Label tankIsFound;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button updateClients;
     }
 }
 
