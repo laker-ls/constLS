@@ -22,8 +22,8 @@ namespace ConstLS.Memory.Parameters.RawParameters
             for (int i = 0; i < 768; i++) {
                 Int32 randomMob = this.Mob(i);
                 if (randomMob != 0) {
-                    Int32 mobWID = pwClient.read.as4byte(this.Mob(i) + Offset.mob.worldID);
-                    Int32 mobType = pwClient.read.as4byte(this.Mob(i) + Offset.mob.type);
+                    Int32 mobWID = pwClient.read.as4byte(this.Mob(i) + Offset.get().mob_worldID());
+                    Int32 mobType = pwClient.read.as4byte(this.Mob(i) + Offset.get().mob_type());
                     if (mobWID == needWID && mobType == 6) {
                         this.currentMobWID = i;
                         break;
@@ -35,22 +35,22 @@ namespace ConstLS.Memory.Parameters.RawParameters
         public Coordinates coordinateRaw()
         {
             Coordinates rawCoordinates = new Coordinates();
-            rawCoordinates.x = pwClient.read.asFloat(this.Mob() + Offset.mob.x);
-            rawCoordinates.y = pwClient.read.asFloat(this.Mob() + Offset.mob.y);
-            rawCoordinates.z = pwClient.read.asFloat(this.Mob() + Offset.mob.z);
+            rawCoordinates.x = pwClient.read.asFloat(this.Mob() + Offset.get().mob_x());
+            rawCoordinates.y = pwClient.read.asFloat(this.Mob() + Offset.get().mob_y());
+            rawCoordinates.z = pwClient.read.asFloat(this.Mob() + Offset.get().mob_z());
             return rawCoordinates;
         }
 
-        public Int32 lvl() { return pwClient.read.as4byte(this.Mob() + Offset.mob.lvl); }
-        public Int32 HP() { return pwClient.read.as4byte(this.Mob() + Offset.mob.HP); }
-        public Int32 HPmax() { return pwClient.read.as4byte(this.Mob() + Offset.mob.maxHP); }
-        public float distance() { return pwClient.read.asFloat(this.Mob() + Offset.mob.distance); }
-        public Int32 worldID() { return pwClient.read.as4byte(this.Mob() + Offset.mob.worldID); }
-        public bool attack() { return pwClient.read.asBoolean(this.Mob() + Offset.mob.attack); }
+        public Int32 lvl() { return pwClient.read.as4byte(this.Mob() + Offset.get().mob_lvl()); }
+        public Int32 HP() { return pwClient.read.as4byte(this.Mob() + Offset.get().mob_HP()); }
+        public Int32 HPmax() { return pwClient.read.as4byte(this.Mob() + Offset.get().mob_maxHP()); }
+        public float distance() { return pwClient.read.asFloat(this.Mob() + Offset.get().mob_distance()); }
+        public Int32 worldID() { return pwClient.read.as4byte(this.Mob() + Offset.get().mob_worldID()); }
+        public bool attack() { return pwClient.read.asBoolean(this.Mob() + Offset.get().mob_attack()); }
 
-        protected Int32 rawType() { return pwClient.read.as4byte(this.Mob() + Offset.mob.type); }
-        protected Int32 rawFeature() { return pwClient.read.as4byte(this.Mob() + Offset.mob.feature); }
-        protected Int32 rawAction() { return pwClient.read.as4byte(this.Mob() + Offset.mob.action); }
+        protected Int32 rawType() { return pwClient.read.as4byte(this.Mob() + Offset.get().mob_type()); }
+        protected Int32 rawFeature() { return pwClient.read.as4byte(this.Mob() + Offset.get().mob_feature()); }
+        protected Int32 rawAction() { return pwClient.read.as4byte(this.Mob() + Offset.get().mob_action()); }
 
         protected Int32 Mob(Int32 number = 999)
         {
@@ -58,10 +58,10 @@ namespace ConstLS.Memory.Parameters.RawParameters
                 number = this.currentMobWID;
             }
             Int32 buffer;
-            buffer = pwClient.read.as4byte(Offset.gameAddress);
-            buffer = pwClient.read.as4byte(buffer + Offset.mob.structure1);
-            buffer = pwClient.read.as4byte(buffer + Offset.mob.structure2);
-            buffer = pwClient.read.as4byte(buffer + Offset.mob.structure3);
+            buffer = pwClient.read.as4byte(Offset.get().gameAddress());
+            buffer = pwClient.read.as4byte(buffer + Offset.get().mob_structure1());
+            buffer = pwClient.read.as4byte(buffer + Offset.get().mob_structure2());
+            buffer = pwClient.read.as4byte(buffer + Offset.get().mob_structure3());
             buffer = pwClient.read.as4byte(buffer + number * 0x4);
             if (buffer != 0) {
                 return pwClient.read.as4byte(buffer + 0x4);

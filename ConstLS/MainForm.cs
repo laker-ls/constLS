@@ -6,8 +6,7 @@ using ConstLS.CoordinationCenter;
 using System.Diagnostics;
 using ConstLS.CoordinationCenter.Units;
 using ConstLS.KeyAndMouseHook;
-using System.Threading;
-using System.Threading.Tasks;
+using ConstLS.Memory.Offsets;
 
 namespace ConstLS
 {
@@ -28,18 +27,39 @@ namespace ConstLS
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            this.setProcessesGame();
+            this.setServerList();
         }
 
         private void UpdateClients_Click(object sender, EventArgs e)
         {
-            this.setProcessesGame();
+            this.setServerList();
         }
 
-        private void setProcessesGame()
+        private void setServerList()
         {
-            this.processForTank = ClientMemory.connect("TankLS");
-            this.processForDruid = ClientMemory.connect("DruidLS");
+            serverList.Items.Clear();
+            
+            Process[] gameProcesses = Process.GetProcessesByName("elementclient");
+            bool unique = true;
+            foreach (Process gameProcess in gameProcesses) {
+                foreach (string item in serverList.Items) {
+                    string itemWithoutSpace = item.Replace(" ", "");
+                    string windowTitleWithoutSpace = gameProcess.MainWindowTitle.ToString().Replace(" ", "");
+                    if (itemWithoutSpace.Contains(windowTitleWithoutSpace)) {
+                        unique = false;
+                        break;
+                    }
+                }
+                if (unique) {
+                    serverList.Items.Add(gameProcess.MainWindowTitle);
+                }
+            }
+
+            if (serverList.Items[0] == null) {
+                serverList.Items.Add("Ни один игровой клиент не запущен.");
+            }
+
+            serverList.Text = serverList.Items[0].ToString();
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -73,6 +93,18 @@ namespace ConstLS
             //if (CoordinationCenter.Tank != null && CoordinationCenter.Druid != null) {
             //    this.CoordinationCenter.assistFirstSubgroup();
             //}
+        }
+
+        private void serverList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Offset.setGameServer(serverList.SelectedItem.ToString());
+            this.setProcessesGame(serverList.SelectedItem.ToString());
+        }
+
+        private void setProcessesGame(string selectedServer)
+        {
+            this.processForTank = ClientMemory.connect("TankLS", selectedServer);
+            this.processForDruid = ClientMemory.connect("DruidLS", selectedServer);
         }
     }
 }

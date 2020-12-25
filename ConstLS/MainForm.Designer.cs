@@ -29,37 +29,61 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.listOfClients = new System.Windows.Forms.GroupBox();
+            this.serverName = new System.Windows.Forms.GroupBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.serverList = new System.Windows.Forms.ComboBox();
             this.updateClients = new System.Windows.Forms.Button();
             this.druidIsFound = new System.Windows.Forms.Label();
             this.tankIsFound = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.listOfClients.SuspendLayout();
+            this.serverName.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // listOfClients
+            // serverName
             // 
-            this.listOfClients.Controls.Add(this.updateClients);
-            this.listOfClients.Controls.Add(this.druidIsFound);
-            this.listOfClients.Controls.Add(this.tankIsFound);
-            this.listOfClients.Controls.Add(this.label2);
-            this.listOfClients.Controls.Add(this.label1);
-            this.listOfClients.Location = new System.Drawing.Point(12, 12);
-            this.listOfClients.Name = "listOfClients";
-            this.listOfClients.Size = new System.Drawing.Size(118, 176);
-            this.listOfClients.TabIndex = 3;
-            this.listOfClients.TabStop = false;
-            this.listOfClients.Text = "Персонажи";
+            this.serverName.Controls.Add(this.groupBox1);
+            this.serverName.Controls.Add(this.updateClients);
+            this.serverName.Controls.Add(this.druidIsFound);
+            this.serverName.Controls.Add(this.tankIsFound);
+            this.serverName.Controls.Add(this.label2);
+            this.serverName.Controls.Add(this.label1);
+            this.serverName.Location = new System.Drawing.Point(12, 12);
+            this.serverName.Name = "serverName";
+            this.serverName.Size = new System.Drawing.Size(408, 111);
+            this.serverName.TabIndex = 3;
+            this.serverName.TabStop = false;
+            this.serverName.Text = "Состояние подключения";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.serverList);
+            this.groupBox1.Location = new System.Drawing.Point(152, 66);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(256, 45);
+            this.groupBox1.TabIndex = 6;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Выбранный сервер";
+            // 
+            // serverList
+            // 
+            this.serverList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.serverList.FormattingEnabled = true;
+            this.serverList.Location = new System.Drawing.Point(6, 16);
+            this.serverList.Name = "serverList";
+            this.serverList.Size = new System.Drawing.Size(242, 21);
+            this.serverList.TabIndex = 0;
+            this.serverList.SelectedIndexChanged += new System.EventHandler(this.serverList_SelectedIndexChanged);
             // 
             // updateClients
             // 
-            this.updateClients.Location = new System.Drawing.Point(6, 146);
+            this.updateClients.Location = new System.Drawing.Point(6, 82);
             this.updateClients.Name = "updateClients";
-            this.updateClients.Size = new System.Drawing.Size(106, 23);
+            this.updateClients.Size = new System.Drawing.Size(111, 23);
             this.updateClients.TabIndex = 4;
-            this.updateClients.Text = "Обновить";
+            this.updateClients.Text = "Обновить сервера";
             this.updateClients.UseVisualStyleBackColor = true;
             this.updateClients.Click += new System.EventHandler(this.UpdateClients_Click);
             // 
@@ -112,25 +136,28 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(141, 193);
-            this.Controls.Add(this.listOfClients);
+            this.ClientSize = new System.Drawing.Size(430, 139);
+            this.Controls.Add(this.serverName);
             this.Name = "MainWindow";
             this.Text = "constLS";
             this.Load += new System.EventHandler(this.MainWindow_Load);
-            this.listOfClients.ResumeLayout(false);
-            this.listOfClients.PerformLayout();
+            this.serverName.ResumeLayout(false);
+            this.serverName.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.GroupBox listOfClients;
+        private System.Windows.Forms.GroupBox serverName;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label druidIsFound;
         private System.Windows.Forms.Label tankIsFound;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button updateClients;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ComboBox serverList;
     }
 }
 

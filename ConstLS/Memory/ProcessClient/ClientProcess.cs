@@ -1,4 +1,5 @@
 ﻿using ConstLS.CoordinationCenter.Units;
+using ConstLS.Memory.Offsets;
 using System;
 using System.Diagnostics;
 
@@ -26,9 +27,9 @@ namespace ConstLS.Memory
 
         private Int32 memoryAllocation()
         {
-            IntPtr hProcess = Memory.openProcess(this.id);
-            Int32 allocMemoryAddress = Memory.virtualAllocEx(hProcess, 1023);
-            Memory.closeHandle(hProcess);
+            IntPtr hProcess = WorkWithMemory.openProcess(this.id);
+            Int32 allocMemoryAddress = WorkWithMemory.virtualAllocEx(hProcess, 1023);
+            WorkWithMemory.closeHandle(hProcess);
 
             return allocMemoryAddress;
         }
@@ -39,15 +40,18 @@ namespace ConstLS.Memory
             this.allocMemoryPacket = (allocMemoryAddress + 500);
         }
 
-        public static Process connect(string nameOfPersonage)
+        public static Process connect(string nameOfPersonage, string selectedServer)
         {
             Process[] pwClients = Process.GetProcessesByName("elementclient");
-
             Process needClient = null;
             for (int i = 0; i < pwClients.Length; i++) {
-                UnitBase RandomUnit = new UnitBase(pwClients[i]);
-                if (RandomUnit.self.isExist() && RandomUnit.self.name() == nameOfPersonage) {
-                    needClient = pwClients[i];
+                string clientName = pwClients[i].MainWindowTitle.ToUpper();
+                bool isSelectedServer = (clientName.Contains(selectedServer.ToUpper()));
+                if (Offset.get() != null && isSelectedServer) {
+                    UnitBase RandomUnit = new UnitBase(pwClients[i]);
+                    if (RandomUnit.self.isExist() && RandomUnit.self.name() == nameOfPersonage) {
+                        needClient = pwClients[i];
+                    }
                 }
             }
             return needClient;

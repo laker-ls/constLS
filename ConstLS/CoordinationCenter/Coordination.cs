@@ -1,6 +1,5 @@
 ﻿using ConstLS.CoordinationCenter.Units;
 using ConstLS.KeyAndMouseHook;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace ConstLS.CoordinationCenter
@@ -24,9 +23,14 @@ namespace ConstLS.CoordinationCenter
             hook.KeyDown += (s, ev) =>
             {
                 if (ev.KeyCode == Keys.LShiftKey) {
-                    if (this.Tank != null && this.Druid != null) {
-                        this.assistFirstSubgroup();
+
+                    if (this.Tank != null) {
+                        this.Tank.jump();
                     }
+
+                    /*if (this.Tank != null && this.Druid != null) {
+                        this.assistFirstSubgroup();
+                    }*/
                 }
             };
         }
@@ -34,10 +38,13 @@ namespace ConstLS.CoordinationCenter
         public void assistFirstSubgroup()
         {
             int targetOfTank = this.Tank.target();
-            if (targetOfTank != 0) {
-                this.Druid.assist(targetOfTank);
-            } else {
-                this.Druid.follow(this.Tank.selfCoordinatesRaw());
+            if (targetOfTank != 0)
+            {
+                this.Druid.attackAssist();
+            }
+            else
+            {
+                //this.Druid.follow(this.Tank.selfCoordinatesRaw());
             }
         }
     }

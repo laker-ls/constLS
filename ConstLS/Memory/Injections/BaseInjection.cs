@@ -43,9 +43,9 @@ namespace ConstLS.Memory.Injections
             ASM asm = new ASM();
             asm.Pushad();
 
-            asm.Mov_EAX(Offset.call.packet);
+            asm.Mov_EAX(Offset.get().call_packet());
 
-            asm.Mov_ECX_DWORD_Ptr(Offset.baseAddress);
+            asm.Mov_ECX_DWORD_Ptr(Offset.get().baseAddress());
             asm.Mov_ECX_DWORD_Ptr_ECX_Add(0x20);
             asm.Mov_EDI(pwClient.allocMemoryPacket);
             asm.Push6A(bodyPacket.Length);

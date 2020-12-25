@@ -7,6 +7,11 @@ namespace ConstLS.CoordinationCenter.Units
     {
         public TankUnit(Process clientProcess) : base(clientProcess) {}
 
+        public void jump()
+        {
+            this.useCommon.jump();
+        }
+
         public int target()
         {
             int targetWID = this.self.targetWID();

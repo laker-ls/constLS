@@ -43,9 +43,9 @@ namespace ConstLS.Memory
         {
             byte[] memory = {};
             if (address != 0) {
-                IntPtr hProcess = Memory.openProcess(this.clientId);
-                memory = Memory.readProcessMemory(hProcess, address, length);
-                Memory.closeHandle(hProcess);
+                IntPtr hProcess = WorkWithMemory.openProcess(this.clientId);
+                memory = WorkWithMemory.readProcessMemory(hProcess, address, length);
+                WorkWithMemory.closeHandle(hProcess);
             }
 
             return memory;
