@@ -1,27 +1,22 @@
 ﻿using System.Diagnostics;
 using static ConstLS.Memory.Parameters.RawParameters.SelfRawParameters;
 
-namespace ConstLS.CoordinationCenter.Units
+namespace ConstLS.Units
 {
-    class TankUnit : UnitBase
+    class TankUnit : BaseUnit
     {
         public TankUnit(Process clientProcess) : base(clientProcess) {}
-
-        public void jump()
-        {
-            this.useCommon.jump();
-        }
 
         public int target()
         {
             int targetWID = this.self.targetWID();
-
             setUpSetters(targetWID);
 
             if (this.mob.isExist()) {
-                return this.self.targetWID();
+                return targetWID;
+            } else {
+                return 0;
             }
-            return 0;
         }
 
         public Coordinates selfCoordinatesRaw()

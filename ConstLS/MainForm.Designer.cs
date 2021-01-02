@@ -1,4 +1,7 @@
-﻿namespace ConstLS
+﻿using System.Diagnostics;
+using System.Drawing;
+
+namespace ConstLS
 {
     partial class MainWindow
     {
@@ -29,7 +32,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.serverName = new System.Windows.Forms.GroupBox();
+            this.groupFirst = new System.Windows.Forms.GroupBox();
+            this.modeLabel = new System.Windows.Forms.Label();
+            this.modeName = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.serverList = new System.Windows.Forms.ComboBox();
             this.updateClients = new System.Windows.Forms.Button();
@@ -38,24 +43,43 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.serverName.SuspendLayout();
+            this.groupFirst.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // serverName
+            // groupFirst
             // 
-            this.serverName.Controls.Add(this.groupBox1);
-            this.serverName.Controls.Add(this.updateClients);
-            this.serverName.Controls.Add(this.druidIsFound);
-            this.serverName.Controls.Add(this.tankIsFound);
-            this.serverName.Controls.Add(this.label2);
-            this.serverName.Controls.Add(this.label1);
-            this.serverName.Location = new System.Drawing.Point(12, 12);
-            this.serverName.Name = "serverName";
-            this.serverName.Size = new System.Drawing.Size(408, 111);
-            this.serverName.TabIndex = 3;
-            this.serverName.TabStop = false;
-            this.serverName.Text = "Состояние подключения";
+            this.groupFirst.Controls.Add(this.modeLabel);
+            this.groupFirst.Controls.Add(this.modeName);
+            this.groupFirst.Controls.Add(this.groupBox1);
+            this.groupFirst.Controls.Add(this.updateClients);
+            this.groupFirst.Controls.Add(this.druidIsFound);
+            this.groupFirst.Controls.Add(this.tankIsFound);
+            this.groupFirst.Controls.Add(this.label2);
+            this.groupFirst.Controls.Add(this.label1);
+            this.groupFirst.Location = new System.Drawing.Point(12, 12);
+            this.groupFirst.Name = "groupFirst";
+            this.groupFirst.Size = new System.Drawing.Size(408, 111);
+            this.groupFirst.TabIndex = 3;
+            this.groupFirst.TabStop = false;
+            // 
+            // modeLabel
+            // 
+            this.modeLabel.AutoSize = true;
+            this.modeLabel.Location = new System.Drawing.Point(6, 0);
+            this.modeLabel.Name = "modeLabel";
+            this.modeLabel.Size = new System.Drawing.Size(90, 13);
+            this.modeLabel.TabIndex = 8;
+            this.modeLabel.Text = "Игровой режим:";
+            // 
+            // modeName
+            // 
+            this.modeName.AutoSize = true;
+            this.modeName.Location = new System.Drawing.Point(93, 0);
+            this.modeName.Name = "modeName";
+            this.modeName.Size = new System.Drawing.Size(33, 13);
+            this.modeName.TabIndex = 7;
+            this.modeName.Text = "mode";
             // 
             // groupBox1
             // 
@@ -129,7 +153,7 @@
             // timer1
             // 
             this.timer1.Enabled = true;
-            this.timer1.Interval = 50;
+            this.timer1.Interval = 200;
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // MainWindow
@@ -137,19 +161,19 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 139);
-            this.Controls.Add(this.serverName);
+            this.Controls.Add(this.groupFirst);
             this.Name = "MainWindow";
             this.Text = "constLS";
             this.Load += new System.EventHandler(this.MainWindow_Load);
-            this.serverName.ResumeLayout(false);
-            this.serverName.PerformLayout();
+            this.groupFirst.ResumeLayout(false);
+            this.groupFirst.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.GroupBox serverName;
+        private System.Windows.Forms.GroupBox groupFirst;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label druidIsFound;
@@ -158,6 +182,66 @@
         private System.Windows.Forms.Button updateClients;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox serverList;
+
+        protected void setServerList()
+        {
+            serverList.Items.Clear();
+
+            Process[] gameProcesses = Process.GetProcessesByName("elementclient");
+            bool unique = true;
+            foreach (Process gameProcess in gameProcesses) {
+                foreach (string item in serverList.Items) {
+                    string itemWithoutSpace = item.Replace(" ", "");
+                    string windowTitleWithoutSpace = gameProcess.MainWindowTitle.ToString().Replace(" ", "");
+                    if (itemWithoutSpace.Contains(windowTitleWithoutSpace)) {
+                        unique = false;
+                        break;
+                    }
+                }
+                if (unique) {
+                    serverList.Items.Add(gameProcess.MainWindowTitle);
+                }
+            }
+
+            if (serverList.Items.Count == 0) {
+                serverList.Items.Add("Ни один игровой клиент не запущен");
+            }
+
+            serverList.Text = serverList.Items[0].ToString();
+        }
+
+        protected void displayMode(string mode)
+        {
+            if (mode != "") {
+                modeName.Text = mode;
+                modeName.ForeColor = Color.Green;
+            } else {
+                modeName.Text = "не установлен";
+                modeName.ForeColor = Color.Red;
+            }
+        }
+
+        protected void displayStatus()
+        {
+            if (processForTank != null) {
+                tankIsFound.Text = "Подключен";
+                tankIsFound.ForeColor = Color.Green;
+            } else {
+                tankIsFound.Text = "Не найден";
+                tankIsFound.ForeColor = Color.Red;
+            }
+
+            if (processForDruid != null) {
+                druidIsFound.Text = "Подключен";
+                druidIsFound.ForeColor = Color.Green;
+            } else {
+                druidIsFound.Text = "Не найден";
+                druidIsFound.ForeColor = Color.Red;
+            }
+        }
+
+        private System.Windows.Forms.Label modeName;
+        private System.Windows.Forms.Label modeLabel;
     }
 }
 

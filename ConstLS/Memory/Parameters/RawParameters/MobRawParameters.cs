@@ -45,9 +45,9 @@ namespace ConstLS.Memory.Parameters.RawParameters
         public Int32 HP() { return pwClient.read.as4byte(this.Mob() + Offset.get().mob_HP()); }
         public Int32 HPmax() { return pwClient.read.as4byte(this.Mob() + Offset.get().mob_maxHP()); }
         public float distance() { return pwClient.read.asFloat(this.Mob() + Offset.get().mob_distance()); }
-        public Int32 worldID() { return pwClient.read.as4byte(this.Mob() + Offset.get().mob_worldID()); }
         public bool attack() { return pwClient.read.asBoolean(this.Mob() + Offset.get().mob_attack()); }
 
+        protected Int32 rawWorldID() { return pwClient.read.as4byte(this.Mob() + Offset.get().mob_worldID()); }
         protected Int32 rawType() { return pwClient.read.as4byte(this.Mob() + Offset.get().mob_type()); }
         protected Int32 rawFeature() { return pwClient.read.as4byte(this.Mob() + Offset.get().mob_feature()); }
         protected Int32 rawAction() { return pwClient.read.as4byte(this.Mob() + Offset.get().mob_action()); }

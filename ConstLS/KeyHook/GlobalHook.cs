@@ -9,7 +9,7 @@ using System.Windows.Forms;
  * Удалил хуки для мыши (при остановке процесса на брейкпоинте в течении нескольких секунд тормозил указатель мыши).
  */
 
-namespace ConstLS.KeyAndMouseHook
+namespace ConstLS.KeyHook
 {
     public sealed class GlobalHook : IDisposable
     {

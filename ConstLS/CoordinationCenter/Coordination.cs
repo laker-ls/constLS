@@ -1,50 +1,26 @@
-﻿using ConstLS.CoordinationCenter.Units;
-using ConstLS.KeyAndMouseHook;
-using System.Windows.Forms;
+﻿using ConstLS.Units;
 
 namespace ConstLS.CoordinationCenter
 {
-    class Coordination
+    class Coordination : IncomingCommand
     {
-        public TankUnit Tank;
-        public DruidUnit Druid;
-
-        private GlobalHook hook;
-
-        public Coordination()
+        public void loop()
         {
-            this.eventByPressButton();
+            this.setModeForUnits();
+            this.launchBehavourUnits();
         }
 
-        private void eventByPressButton()
+        private void setModeForUnits()
         {
-            this.hook = new GlobalHook();
-
-            hook.KeyDown += (s, ev) =>
-            {
-                if (ev.KeyCode == Keys.LShiftKey) {
-
-                    if (this.Tank != null) {
-                        this.Tank.jump();
-                    }
-
-                    /*if (this.Tank != null && this.Druid != null) {
-                        this.assistFirstSubgroup();
-                    }*/
-                }
-            };
-        }
-
-        public void assistFirstSubgroup()
-        {
-            int targetOfTank = this.Tank.target();
-            if (targetOfTank != 0)
-            {
-                this.Druid.attackAssist();
+            if (this.Druid != null) {
+                this.Druid.setMode(this.mode);
             }
-            else
-            {
-                //this.Druid.follow(this.Tank.selfCoordinatesRaw());
+        }
+
+        private void launchBehavourUnits()
+        {
+            if (this.Tank != null && this.Druid != null) {
+                this.Druid.behavior(this.Tank.self);
             }
         }
     }

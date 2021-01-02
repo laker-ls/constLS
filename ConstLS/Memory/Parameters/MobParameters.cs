@@ -7,6 +7,15 @@ namespace ConstLS.Memory.Parameters
     {
         public MobParameters(ClientMemory clientMemory) :base(clientMemory) {}
 
+        public int worldID()
+        {
+            if (this.isExist()) {
+                return this.rawWorldID();
+            } else {
+                return -1;
+            }
+        }
+
         public string type()
         {
             switch (this.rawType()) {
@@ -58,7 +67,8 @@ namespace ConstLS.Memory.Parameters
 
         public int HPpercent() {
             if (this.HP() != 0) {
-                return (this.HP() / (this.HPmax() / 100));
+                double result = (62 / (62 * 0.01));
+                return Convert.ToInt32(result);
             }
             return 0;
         }

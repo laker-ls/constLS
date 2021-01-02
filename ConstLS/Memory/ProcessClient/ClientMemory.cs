@@ -1,4 +1,4 @@
-﻿using ConstLS.CoordinationCenter.Units;
+﻿using ConstLS.Units;
 using ConstLS.Memory.Offsets;
 using System;
 using System.Diagnostics;
@@ -11,12 +11,16 @@ namespace ConstLS.Memory
         public WriteMemory write;
 
         public Int32 id;
+        public string title;
+        public IntPtr handle;
         public Int32 allocMemoryFunction;
         public Int32 allocMemoryPacket;
 
         public ClientMemory(Process clientProcess)
         {
             this.id = clientProcess.Id;
+            this.title = clientProcess.MainWindowTitle;
+            this.handle = clientProcess.MainWindowHandle;
 
             Int32 allocMemoryAddress = this.memoryAllocation();
             memoryAllocationOffsets(allocMemoryAddress);
@@ -48,7 +52,7 @@ namespace ConstLS.Memory
                 string clientName = pwClients[i].MainWindowTitle.ToUpper();
                 bool isSelectedServer = (clientName.Contains(selectedServer.ToUpper()));
                 if (Offset.get() != null && isSelectedServer) {
-                    UnitBase RandomUnit = new UnitBase(pwClients[i]);
+                    BaseUnit RandomUnit = new BaseUnit(pwClients[i]);
                     if (RandomUnit.self.isExist() && RandomUnit.self.name() == nameOfPersonage) {
                         needClient = pwClients[i];
                     }

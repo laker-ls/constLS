@@ -229,6 +229,16 @@ namespace ConstLS.Memory
             }
         }
 
+        public void Mov_DWORD_Ptr_ESI_ADD_EAX(int addre)
+        {
+            if ((addre <= 127) && (addre >= -128)) {
+                this.Asmcode = this.Asmcode + "8946" + intTohex(addre, 2);
+            }
+            else {
+                this.Asmcode = this.Asmcode + "8986" + intTohex(addre, 8);
+            }
+        }
+
         public void Mov_DWORD_Ptr_ECX_ADD_EAX(int addre)
         {
             if ((addre <= 127) && (addre >= -128)) {
@@ -629,6 +639,16 @@ namespace ConstLS.Memory
             }
             else {
                 this.Asmcode = this.Asmcode + "8BB9" + intTohex(addre, 8);
+            }
+        }
+
+        public void Mov_EDI_DWORD_Ptr_EAX_Add(int addre)
+        {
+            if ((addre <= 127) && (addre >= -128)) {
+                this.Asmcode = this.Asmcode + "8B78" + intTohex(addre, 2);
+            }
+            else {
+                this.Asmcode = this.Asmcode + "8BB8" + intTohex(addre, 8);
             }
         }
 

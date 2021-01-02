@@ -3,11 +3,11 @@ using ConstLS.Memory.Offsets;
 
 namespace ConstLS.Memory.Injections
 {
-    class ActionOld
+    class InjectionFunction
     {
         private ClientMemory pwClient;
 
-        public ActionOld(ClientMemory pwClient)
+        public InjectionFunction(ClientMemory pwClient)
         {
             this.pwClient = pwClient;
         }
@@ -48,29 +48,31 @@ namespace ConstLS.Memory.Injections
             this.sendInGame(asm.inBytes());
         }
 
-        public void walk(float x, float y, float z)
+        public void walk(float x, float y, float z) // Не работает
         {
             int walkMode = 0; // 0 - передвижение по земле, 1 - полёт
 
             ASM asm = new ASM();
             asm.Pushad();
 
+            int test_x = 1, test_y = 1, test_z = 1;
+
             asm.Mov_EAX_DWORD_Ptr(Offset.get().gameAddress());
             asm.Mov_ESI_DWORD_Ptr_EAX_Add(Offset.get().self_structure());
-            asm.Mov_ECX_DWORD_Ptr_ESI_Add(0x1050);
+            asm.Mov_ECX_DWORD_Ptr_ESI_Add(0x14F0);
             asm.Push68(0x01);
             asm.Mov_EDX(Offset.get().call_walk1());
             asm.Call_EDX();
 
             asm.Mov_EDI_EAX();
-            asm.Lea_EAX_DWORD_Ptr_ESP_Add(0x18);
+            asm.Lea_EAX_DWORD_Ptr_ESP_Add(0x1C);
             asm.Push_EAX();
             asm.Push6A(walkMode);
             asm.Mov_ECX_EDI();
             asm.Mov_EBX(Offset.get().call_walk2());
             asm.Call_EBX();
 
-            asm.Mov_ECX_DWORD_Ptr_ESI_Add(0x1050);
+            asm.Mov_ECX_DWORD_Ptr_ESI_Add(0x13A8);
             asm.Push6A(0x00);
             asm.Push6A(0x01);
             asm.Push_EDI();
@@ -80,16 +82,15 @@ namespace ConstLS.Memory.Injections
 
             asm.Mov_EAX_DWORD_Ptr(Offset.get().gameAddress());
             asm.Mov_EAX_DWORD_Ptr_EAX_Add(Offset.get().self_structure());
-            asm.Mov_EAX_DWORD_Ptr_EAX_Add(0x1050);
+            asm.Mov_EAX_DWORD_Ptr_EAX_Add(0x14F0);
             asm.Mov_EAX_DWORD_Ptr_EAX_Add(0x30);
             asm.Mov_ECX_DWORD_Ptr_EAX_Add(0x04);
-            asm.Mov_EAX(x);
+            asm.Mov_EAX(test_x);
             asm.Mov_DWORD_Ptr_ECX_ADD_EAX(0x20);
-            asm.Mov_EAX(z);
+            asm.Mov_EAX(test_z);
             asm.Mov_DWORD_Ptr_ECX_ADD_EAX(0x24);
-            asm.Mov_EAX(y);
+            asm.Mov_EAX(test_y);
             asm.Mov_DWORD_Ptr_ECX_ADD_EAX(0x28);
-
 
             asm.Popad();
             asm.Ret();

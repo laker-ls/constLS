@@ -3,21 +3,21 @@ using System;
 
 namespace ConstLS.Memory.Injections
 {
-    class BaseInjection
+    class InjectionPacket
     {
         protected ClientMemory pwClient;
 
-        public BaseInjection(ClientMemory pwClient)
+        public InjectionPacket(ClientMemory pwClient)
         {
             this.pwClient = pwClient;
         }
 
-        protected void sendWithoutParamter(byte[] packet)
+        public void sendWithoutParamter(byte[] packet)
         {
             this.send(packet);
         }
 
-        protected void sendWithOneParameter(byte[] packet, int parameter, int destinationPacket, int lengthParameter = 4)
+        public void sendWithOneParameter(byte[] packet, int parameter, int destinationPacket, int lengthParameter = 4)
         {
             byte[] parameterAsByte = BitConverter.GetBytes(parameter);
             byte[] modifiedPacket = packet;
@@ -26,7 +26,7 @@ namespace ConstLS.Memory.Injections
             this.send(modifiedPacket);
         }
 
-        protected void sendWithTwoParameter(byte[] packet, int[] parameters, int[] destinationPackets, int lengthEachParameter = 4)
+        public void sendWithTwoParameter(byte[] packet, int[] parameters, int[] destinationPackets, int lengthEachParameter = 4)
         {
             byte[] parameterAsByte = BitConverter.GetBytes(parameters[0]);
             byte[] parameterSecondAsByte = BitConverter.GetBytes(parameters[1]);

@@ -46,27 +46,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoordinationCenter\Behavior.cs" />
     <Compile Include="CoordinationCenter\Coordination.cs" />
-    <Compile Include="CoordinationCenter\Units\Actions\ActionBase.cs" />
-    <Compile Include="CoordinationCenter\Units\Actions\CommonAction.cs" />
-    <Compile Include="CoordinationCenter\Units\Actions\DruidAction\DruidAttackAction.cs" />
-    <Compile Include="CoordinationCenter\Units\Actions\DruidAction\DruidPetAction.cs" />
-    <Compile Include="CoordinationCenter\Units\Conditions\Attack\DruidConditionsAttack.cs" />
-    <Compile Include="CoordinationCenter\Units\Conditions\Healing\DruidConditionsHealing.cs" />
-    <Compile Include="KeyAndMouseHook\GlobalHook.cs" />
+    <Compile Include="CoordinationCenter\IncomingCommand.cs" />
+    <Compile Include="Units\Actions\BaseAction.cs" />
+    <Compile Include="Units\Conditions\BaseCondition.cs" />
+    <Compile Include="Units\SkillLists\УмениеДруида.cs" />
+    <Compile Include="Memory\Injections\InjectionKeyPress.cs" />
+    <Compile Include="Units\Actions\DruidAction.cs" />
+    <Compile Include="Units\Conditions\DruidCondition.cs" />
+    <Compile Include="KeyHook\GlobalHook.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Memory\Injections\ActionInjection.cs" />
-    <Compile Include="Memory\Injections\BaseInjection.cs" />
-    <Compile Include="Memory\Injections\Functions\ActionOld.cs" />
+    <Compile Include="Memory\Injections\InjectionPacket.cs" />
+    <Compile Include="Memory\Injections\InjectionFunction.cs" />
     <Compile Include="Memory\Injections\PacketLists\PacketList.cs" />
-    <Compile Include="Memory\Injections\PetInjection.cs" />
     <Compile Include="Memory\Offsets\GameServers\IGameServerOffset.cs" />
-    <Compile Include="Memory\ProcessClient\ClientProcess.cs" />
+    <Compile Include="Memory\ProcessClient\ClientMemory.cs" />
     <Compile Include="Memory\ASM.cs" />
     <Compile Include="Memory\WorkWithMemory.cs" />
     <Compile Include="Memory\Offsets\GameServers\cloudy.cs" />
@@ -79,12 +79,12 @@
     <Compile Include="Memory\Parameters\RawParameters\MobRawParameters.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CoordinationCenter\Units\DruidUnit.cs" />
+    <Compile Include="Units\DruidUnit.cs" />
     <Compile Include="Memory\Parameters\RawParameters\SelfRawParameters.cs" />
     <Compile Include="Memory\Parameters\MobParameters.cs" />
     <Compile Include="Memory\Parameters\SelfParameters.cs" />
-    <Compile Include="CoordinationCenter\Units\TankUnit.cs" />
-    <Compile Include="CoordinationCenter\Units\UnitBase.cs" />
+    <Compile Include="Units\TankUnit.cs" />
+    <Compile Include="Units\BaseUnit.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
